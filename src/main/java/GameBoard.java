@@ -1,7 +1,7 @@
 public class GameBoard
 {
     private GameBoardOptions[] optionsOnGameBoard;
-/*
+
     public GameBoardOptions getSpecificOptionOnBoard(String userInput)
     {
         for (int boardOptionIteratior = 0; boardOptionIteratior < optionsOnGameBoard.length; boardOptionIteratior++)
@@ -11,9 +11,9 @@ public class GameBoard
                 return optionsOnGameBoard[boardOptionIteratior];
             }
         }
-        return null
+        return null;
     }
-*/
+
     public GameBoard()
     {
         optionsOnGameBoard = new GameBoardOptions[15];
@@ -33,6 +33,16 @@ public class GameBoard
         optionsOnGameBoard[13] = new GameBoardOptions.FullHouse();
         optionsOnGameBoard[14] = new GameBoardOptions.Yatzy();
     }
+/*
+    public String getHighestScoringOptionID()
+    {
+        int highestScoringOptionValue = 0;
+        String highestScoringOptionID;
+        for (int )
+            for ()
+
+    }
+ */
     /*
     Ones: The sum of all dice showing the number 1.
     Twos: The sum of all dice showing the number 2.
@@ -56,9 +66,9 @@ public class GameBoard
     public void drawGameBoard (int[] givenDice)
     {
         System.out.println("-------------------------------");
-        for (int gameBoardIteratior = 0; gameBoardIteratior < 15; gameBoardIteratior++)
+        for (int gameBoardIterator = 0; gameBoardIterator < 15; gameBoardIterator++)
         {
-            System.out.println(optionsOnGameBoard[gameBoardIteratior].calculateStringForScoreBoard(givenDice));
+            System.out.println(optionsOnGameBoard[gameBoardIterator].calculateStringForScoreBoard(givenDice));
         }
         System.out.println("-------------------------------");
     }

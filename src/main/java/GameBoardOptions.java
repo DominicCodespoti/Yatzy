@@ -134,8 +134,9 @@ public interface GameBoardOptions
             int calculatedScore = 0;
             for (int diceIterator = 0; diceIterator < 5; diceIterator++)
                 for (int diceIteratorTwo = 1; diceIteratorTwo < 5; diceIteratorTwo++)
-                    if (diceIterator == diceIteratorTwo)
-                        calculatedScore += givenDice[diceIterator];
+                    if (diceIterator != diceIteratorTwo && givenDice[diceIterator] == givenDice[diceIteratorTwo])
+                        if (givenDice[diceIterator] * 2 > calculatedScore)
+                            calculatedScore = givenDice[diceIterator] * 2;
             return calculatedScore;
         }
         public String calculateStringForScoreBoard (int[] givenDice)
