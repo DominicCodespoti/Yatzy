@@ -1,0 +1,8 @@
+version: "3"
+services:
+  test:
+    image: amazoncorretto:11
+    volumes:
+      - .:/opt/code
+    working_dir: /opt/code
+    command: sh -c "./gradlew test"
