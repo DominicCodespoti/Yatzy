@@ -10,7 +10,6 @@ public class PlayerTest
         Assert.assertEquals(testPlayer.getPlayerScore(), 0);
     }
 
-/*
     @Test
     public void canCreateNewRobot ()
     {
@@ -18,5 +17,4 @@ public class PlayerTest
         testPlayer.setIsPlayerRobot(true);
         Assert.assertTrue(testPlayer.getIsPlayerRobot());
     }
-*/
 }

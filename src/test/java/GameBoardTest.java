@@ -20,4 +20,16 @@ public class GameBoardTest
         String highestID = testBoard.getHighestScoringOptionID(testDice);
         Assert.assertEquals(21, testBoard.getSpecificOptionOnBoard(highestID).calculateScoreFromGivenDice(testDice));
     }
+
+    @Test
+    public void testGradualBoardDeletion ()
+    {
+        int[] testDice = { 3, 3, 5 ,5 ,5};
+        GameBoard testBoard = new GameBoard();
+        while(!testBoard.isGameBoardEmpty())
+        {
+            testBoard.getSpecificOptionOnBoard(testBoard.getHighestScoringOptionID(testDice));
+        }
+        Assert.assertTrue(testBoard.isGameBoardEmpty());
+    }
 }
