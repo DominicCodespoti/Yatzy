@@ -98,4 +98,25 @@ public class GameBoardOptionsTest
         GameBoardOptions.FourOfAKind option = new GameBoardOptions.FourOfAKind();
         Assert.assertEquals(12, option.calculateScoreFromGivenDice(dice));
     }
+    @Test
+    public void smallStraightCalculatesTheSumCorrectly()
+    {
+        int[] dice = { 1, 2, 3, 4, 5};
+        GameBoardOptions.SmallStraight option = new GameBoardOptions.SmallStraight();
+        Assert.assertEquals(15, option.calculateScoreFromGivenDice(dice));
+    }
+    @Test
+    public void largeStraightCalculatesTheSumCorrectly()
+    {
+        int[] dice = { 2, 3, 4, 5, 6};
+        GameBoardOptions.LargeStraight option = new GameBoardOptions.LargeStraight();
+        Assert.assertEquals(20, option.calculateScoreFromGivenDice(dice));
+    }
+    @Test
+    public void fullhouseCalculatesTheSumCorrectly()
+    {
+        int[] dice = { 1, 1, 3, 3, 3};
+        GameBoardOptions.FullHouse option = new GameBoardOptions.FullHouse();
+        Assert.assertEquals(11, option.calculateScoreFromGivenDice(dice));
+    }
 }
