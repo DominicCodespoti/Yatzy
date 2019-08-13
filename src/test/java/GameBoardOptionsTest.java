@@ -76,6 +76,14 @@ public class GameBoardOptionsTest
     }
 
     @Test
+    public void threeOfAKindCalculatesZeroWhenApplicable()
+    {
+        int[] dice = { 3, 3, 2, 1, 1 };
+        GameBoardOptions.ThreeOfAKind option = new GameBoardOptions.ThreeOfAKind();
+        Assert.assertEquals(0, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
     public void threeOfAKindCalculatesTheSumCorrectlyWithPairPrior()
     {
         int[] dice = { 1, 1, 3, 3, 3};

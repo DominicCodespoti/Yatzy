@@ -196,6 +196,8 @@ public interface GameBoardOptions
             }
 
             List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getKey).collect(Collectors.toList());
+            if(pairs.isEmpty())
+                return 0;
             return pairs.get(0) * 2 + pairs.get(1) * 2;
         }
 
@@ -220,8 +222,10 @@ public interface GameBoardOptions
                 diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
             }
 
-            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 2).map(Map.Entry::getKey).collect(Collectors.toList());
-            return pairs.get(0) * 3;
+            List<Integer> threeOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 2).map(Map.Entry::getKey).collect(Collectors.toList());
+            if(threeOfAKind.isEmpty())
+                return 0;
+            return threeOfAKind.get(0) * 3;
         }
 
         public String calculateStringForScoreBoard (int[] givenDice)
@@ -245,8 +249,10 @@ public interface GameBoardOptions
                 diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
             }
 
-            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 3).map(Map.Entry::getKey).collect(Collectors.toList());
-            return pairs.get(0) * 4;
+            List<Integer> fourOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 3).map(Map.Entry::getKey).collect(Collectors.toList());
+            if(fourOfAKind.isEmpty())
+                return 0;
+            return fourOfAKind.get(0) * 4;
         }
 
         public String calculateStringForScoreBoard (int[] givenDice)
@@ -331,10 +337,16 @@ public interface GameBoardOptions
 
         public int calculateScoreFromGivenDice (int[] givenDice)
         {
-            int calculatedScore = 0;
-            for (int diceIterator = 0; diceIterator < 5; diceIterator++)
-                calculatedScore += givenDice[diceIterator];
-            return calculatedScore;
+            HashMap<Integer, Integer> diceValueCounts = new HashMap<>();
+            for (int diceValue : givenDice)
+            {
+                diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
+            }
+
+            //Converts HashMap to List using Java Collectors
+            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getKey).collect(Collectors.toList());
+            List<Integer> threeOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 2).map(Map.Entry::getKey).collect(Collectors.toList());
+            return pairs.get(0) * 2 + threeOfAKind.get(0) * 3;
         }
 
         public String calculateStringForScoreBoard (int[] givenDice)
