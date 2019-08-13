@@ -40,7 +40,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Twos               |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Twos               |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Twos               |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -58,7 +61,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Threes             |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Threes             |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Threes             |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -76,7 +82,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Fours              |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Fours              |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Fours              |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -94,7 +103,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Fives              |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Fives              |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Fives              |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -112,7 +124,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Sixes              |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Sixes              |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Sixes              |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -139,7 +154,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|One Pair           |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|One Pair           |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|One Pair           |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -164,7 +182,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Two Pair           |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Two Pair           |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Two Pair           |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -186,7 +207,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Three of a Kind    |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Three of a Kind    |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -208,7 +232,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -226,7 +253,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Small Straight     |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Small Straight     |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Small Straight     |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -244,7 +274,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Large Straight     |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Large Straight     |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Large Straight     |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -261,7 +294,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Chance             |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Chance             |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Chance             |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -285,7 +321,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Full House         |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Full House         |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Full House         |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -302,7 +341,10 @@ public interface GameBoardOptions {
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
-            return "|Yatzy              |" + calculateScoreFromGivenDice(givenDice) + "          |";
+            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
+                return "|Yatzy              |" + calculateScoreFromGivenDice(givenDice) + "         |";
+            else
+                return "|Yatzy              |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 }

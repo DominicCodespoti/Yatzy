@@ -1,21 +1,35 @@
-public class GameBoard
-{
+public class GameBoard {
     private GameBoardOptions[] optionsOnGameBoard;
 
-    public GameBoardOptions getSpecificOptionOnBoard(String userInput)
-    {
-        for (int boardOptionIteratior = 0; boardOptionIteratior < optionsOnGameBoard.length; boardOptionIteratior++)
-        {
-            if (optionsOnGameBoard[boardOptionIteratior].calculateBoardOptionID().equals(userInput.toLowerCase()))
-            {
-                return optionsOnGameBoard[boardOptionIteratior];
+    public static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] arr, int index) {
+        if (arr == null
+                || index < 0
+                || index >= arr.length) {
+
+            return arr;
+        }
+        GameBoardOptions[] anotherArray = new GameBoardOptions[arr.length - 1];
+        for (int i = 0, k = 0; i < arr.length; i++) {
+            if (i == index) {
+                continue;
+            }
+            anotherArray[k++] = arr[i];
+        }
+        return anotherArray;
+    }
+
+    public GameBoardOptions getSpecificOptionOnBoard(String userInput) {
+        for (int boardOptionIteratior = 0; boardOptionIteratior < optionsOnGameBoard.length; boardOptionIteratior++) {
+            if (optionsOnGameBoard[boardOptionIteratior].calculateBoardOptionID().equals(userInput.toLowerCase())) {
+                GameBoardOptions copyOfSelectedOption = optionsOnGameBoard[boardOptionIteratior];
+                optionsOnGameBoard = removeOptionFromGameBoardAtIndex(optionsOnGameBoard, boardOptionIteratior);
+                return copyOfSelectedOption;
             }
         }
         return null;
     }
 
-    public GameBoard()
-    {
+    public GameBoard() {
         optionsOnGameBoard = new GameBoardOptions[15];
         optionsOnGameBoard[0] = new GameBoardOptions.Ones();
         optionsOnGameBoard[1] = new GameBoardOptions.Twos();
@@ -33,16 +47,21 @@ public class GameBoard
         optionsOnGameBoard[13] = new GameBoardOptions.FullHouse();
         optionsOnGameBoard[14] = new GameBoardOptions.Yatzy();
     }
-/*
-    public String getHighestScoringOptionID()
-    {
-        int highestScoringOptionValue = 0;
-        String highestScoringOptionID;
-        for (int )
-            for ()
 
+    public String getHighestScoringOptionID(int[] givenDice) {
+        int highestScoringOptionValue = 0;
+        int highestScoringOptionIndex = 0;
+
+        for (int boardOptionIterator = 0; boardOptionIterator < optionsOnGameBoard.length; boardOptionIterator++) {
+            for (int boardOptionIteratorAhead = 0; boardOptionIteratorAhead < optionsOnGameBoard.length; boardOptionIteratorAhead++)
+                if (optionsOnGameBoard[boardOptionIteratorAhead].calculateScoreFromGivenDice(givenDice) > highestScoringOptionValue) {
+                    highestScoringOptionIndex = boardOptionIteratorAhead;
+                    highestScoringOptionValue = optionsOnGameBoard[boardOptionIteratorAhead].calculateScoreFromGivenDice(givenDice);
+            }
+        }
+        return optionsOnGameBoard[highestScoringOptionIndex].calculateBoardOptionID();
     }
- */
+
     /*
     Ones: The sum of all dice showing the number 1.
     Twos: The sum of all dice showing the number 2.
@@ -63,11 +82,9 @@ public class GameBoard
     Yatzy: All five dice with the same number. Score: 50 points.
 */
 
-    public void drawGameBoard (int[] givenDice)
-    {
+    public void drawGameBoard(int[] givenDice) {
         System.out.println("-------------------------------");
-        for (int gameBoardIterator = 0; gameBoardIterator < 15; gameBoardIterator++)
-        {
+        for (int gameBoardIterator = 0; gameBoardIterator < optionsOnGameBoard.length; gameBoardIterator++) {
             System.out.println(optionsOnGameBoard[gameBoardIterator].calculateStringForScoreBoard(givenDice));
         }
         System.out.println("-------------------------------");
