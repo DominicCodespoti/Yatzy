@@ -3,7 +3,7 @@ import com.sun.org.apache.bcel.internal.generic.PUSH;
 import java.util.Scanner;
 
 public class Game {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         startGame();
     }
 
@@ -17,7 +17,18 @@ public class Game {
         return intarray;
     }
 
-    public static void startGame() {
+    private static boolean checkIfWinConditionIsMet(Player[] playerList) {
+        int playersWithEmptyBoard = 0;
+        for (int playerListIterator = 0; playerListIterator < playerList.length; playerListIterator++) {
+            if (playerList[playerListIterator].getPersonalGameBoard().isGameBoardEmpty())
+                playersWithEmptyBoard++;
+        }
+        if (playersWithEmptyBoard == playerList.length)
+            return true;
+        return false;
+    }
+
+    public static void startGame() throws InterruptedException {
         Scanner readPlayerInput = new Scanner(System.in);
         int[] numbersToKeepWhenRerolling;
         Dice gameDice = new Dice();
@@ -50,6 +61,9 @@ public class Game {
             System.out.println("Great! How many robots would you like to play against: ");
             playerInput = String.valueOf(Integer.parseInt(readPlayerInput.nextLine()) + 1);
             listOfPlayers = new Player[Integer.parseInt(playerInput)];
+            System.out.println("What is, what is your name: ");
+            playerInput = readPlayerInput.nextLine();
+            listOfPlayers[0] = new Player(playerInput);
             for (int playerIterator = 1; playerIterator < listOfPlayers.length; playerIterator++) {
                 System.out.println("What is the name of Robot " + playerIterator + ": ");
                 playerInput = readPlayerInput.nextLine();
@@ -57,15 +71,21 @@ public class Game {
                 listOfPlayers[playerIterator].setIsPlayerRobot(true);
             }
         }
-        while (!playerInput.equals("end turn")) //TODO: create win condition for loop
+
+        while (!checkIfWinConditionIsMet(listOfPlayers)) //TODO: create win condition for loop
         {
             playerInput = "1";
             while (Integer.parseInt(playerInput) != 0) {
                 gameDice.simulateFiveDiceRolls();
                 gameDice.printAllDiceRollValues();
 
-                System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() +  ", are you happy with these values (0), or would you like to reroll (1): ");
-                playerInput = readPlayerInput.nextLine();
+                System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", are you happy with these values (0), or would you like to reroll (1): ");
+                if (!listOfPlayers[currentPlayerIterator].getIsPlayerRobot())
+                    playerInput = readPlayerInput.nextLine();
+                else {
+                    Thread.sleep(2000);
+                    playerInput = "0";
+                }
 
                 while (Integer.parseInt(playerInput) == 1 && rerollCount < 4) {
                     System.out.println("Please enter the numbers you would like to keep (Example: 2,3,1): ");
@@ -77,26 +97,35 @@ public class Game {
                     gameDice.rerollDiceWithoutSpecificValues(numbersToKeepWhenRerolling);
                     gameDice.printAllDiceRollValues();
 
-                    System.out.println("Are you happy with these values (0), or would you like to reroll (1): ");
-                    playerInput = readPlayerInput.nextLine();
                     rerollCount++;
+                    System.out.println("You have " + (3 - rerollCount) + " rerolls left. Are you happy with these values (0), or would you like to reroll (1): ");
+                    playerInput = readPlayerInput.nextLine();
                 }
             }
 
             System.out.println("Here are the possible options on your scoreboard, please enter the name of the option you would like to pick: ");
-            listOfPlayers[currentPlayerIterator].personalGameBoard.drawGameBoard(gameDice.getAllDiceValues());
-            playerInput = readPlayerInput.nextLine();
+            listOfPlayers[currentPlayerIterator].getPersonalGameBoard().drawGameBoard(gameDice.getAllDiceValues());
+            if (!listOfPlayers[currentPlayerIterator].getIsPlayerRobot())
+                playerInput = readPlayerInput.nextLine();
+            else {
+                Thread.sleep(2000);
+                playerInput = listOfPlayers[currentPlayerIterator].selectHighestOptionOnGameBoardOption(gameDice.getAllDiceValues());
+            }
+
             int currentScore = listOfPlayers[currentPlayerIterator].selectGameBoardOption(playerInput, gameDice.getAllDiceValues());
             listOfPlayers[currentPlayerIterator].addToPlayerScore(currentScore);
 
             System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", your score is now:  " + listOfPlayers[currentPlayerIterator].getPlayerScore());
-            System.out.println("It is now " + listOfPlayers[currentPlayerIterator].getPlayerName() + "'s turn!");
 
             rerollCount = 0;
-            if (currentPlayerIterator < listOfPlayers.length - 1)
+            if (currentPlayerIterator < listOfPlayers.length - 1) {
+                System.out.println("It is now " + listOfPlayers[currentPlayerIterator + 1].getPlayerName() + "'s turn!");
                 currentPlayerIterator++;
-            else
+            } else {
+                System.out.println("It is now " + listOfPlayers[0].getPlayerName() + "'s turn!");
                 currentPlayerIterator = 0;
+            }
         }
+        System.out.println("Game over!");
     }
 }
