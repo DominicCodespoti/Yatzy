@@ -1,21 +1,18 @@
 public class GameBoard {
     private GameBoardOptions[] optionsOnGameBoard;
 
-    public static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] arr, int index) {
-        if (arr == null
-                || index < 0
-                || index >= arr.length) {
-
-            return arr;
+    public static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] originalArray, int index) {
+        if (originalArray == null || index < 0 || index >= originalArray.length) {
+            return originalArray;
         }
-        GameBoardOptions[] anotherArray = new GameBoardOptions[arr.length - 1];
-        for (int i = 0, k = 0; i < arr.length; i++) {
-            if (i == index) {
+        GameBoardOptions[] copyOfOriginalArrayWithOptionRemoved = new GameBoardOptions[originalArray.length - 1];
+        for (int arrayIterator = 0, arrayIteratorPlusOne = 0; arrayIterator < originalArray.length; arrayIterator++) {
+            if (arrayIterator == index) {
                 continue;
             }
-            anotherArray[k++] = arr[i];
+            copyOfOriginalArrayWithOptionRemoved[arrayIteratorPlusOne++] = originalArray[arrayIterator];
         }
-        return anotherArray;
+        return copyOfOriginalArrayWithOptionRemoved;
     }
 
     public boolean isGameBoardEmpty() {

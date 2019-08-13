@@ -312,10 +312,11 @@ public interface GameBoardOptions {
                 diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
             }
 
-            //Converts HashMap to List using Java Collectors
             List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getKey).collect(Collectors.toList());
             List<Integer> threeOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 2).map(Map.Entry::getKey).collect(Collectors.toList());
             if (pairs.isEmpty() || threeOfAKind.isEmpty())
+                return 0;
+            if (pairs.get(0).equals(threeOfAKind.get(0)))
                 return 0;
             return pairs.get(0) * 2 + threeOfAKind.get(0) * 3;
         }

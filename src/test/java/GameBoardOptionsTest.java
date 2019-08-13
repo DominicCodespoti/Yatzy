@@ -4,22 +4,16 @@ import org.junit.Test;
 public class GameBoardOptionsTest
 {
     @Test
-    public void yatzyCalculatesCorrectAmountInUpperCase ()
+    public void onesTwosFoursAllCalculateCorrectWhenOccuringTogether()
     {
-        int[] pseudoDice = { 1, 1, 1, 1, 1};
-        GameBoard testBoard = new GameBoard();
-        //TODO: should be 50
-        Assert.assertEquals(50, testBoard.getSpecificOptionOnBoard("YATZY").calculateScoreFromGivenDice(pseudoDice));
+        int[] dice = { 1, 1, 2, 4, 4 };
+        GameBoardOptions.Ones optionOne = new GameBoardOptions.Ones();
+        GameBoardOptions.Twos optionTwo = new GameBoardOptions.Twos();
+        GameBoardOptions.Fours optionFour = new GameBoardOptions.Fours();
+        Assert.assertEquals(2, optionOne.calculateScoreFromGivenDice(dice));
+        Assert.assertEquals(2, optionTwo.calculateScoreFromGivenDice(dice));
+        Assert.assertEquals(8, optionFour.calculateScoreFromGivenDice(dice));
     }
-
-    @Test
-    public void chanceCalculatesCorrectAmountWithRandomCaseInput ()
-    {
-        int[] pseudoDice = { 1, 4, 2, 6, 1 };
-        GameBoard testBoard = new GameBoard();
-        Assert.assertEquals(14, testBoard.getSpecificOptionOnBoard("cHaNcE").calculateScoreFromGivenDice(pseudoDice));
-    }
-
     @Test
     public void onePairCalculatesTheSumOfTheSinglePair()
     {
@@ -113,10 +107,31 @@ public class GameBoardOptionsTest
         Assert.assertEquals(20, option.calculateScoreFromGivenDice(dice));
     }
     @Test
+    public void chanceCalculatesCorrectAmountWithRandomCaseInput ()
+    {
+        int[] dice = { 4, 5, 5, 6, 1 };
+        GameBoardOptions.Chance option = new GameBoardOptions.Chance();
+        Assert.assertEquals(21, option.calculateScoreFromGivenDice(dice));
+    }
+    @Test
     public void fullhouseCalculatesTheSumCorrectly()
     {
         int[] dice = { 1, 1, 3, 3, 3};
         GameBoardOptions.FullHouse option = new GameBoardOptions.FullHouse();
         Assert.assertEquals(11, option.calculateScoreFromGivenDice(dice));
+    }
+    @Test
+    public void fullhouseOutputsZeroWhenPairAndThreeOfAKindAreSameNumber()
+    {
+        int[] dice = { 3, 3, 3, 3, 3};
+        GameBoardOptions.FullHouse option = new GameBoardOptions.FullHouse();
+        Assert.assertEquals(0, option.calculateScoreFromGivenDice(dice));
+    }
+    @Test
+    public void yatzyCalculatesCorrectAmountInUpperCase ()
+    {
+        int[] dice = { 1, 1, 1, 1, 1};
+        GameBoardOptions.Yatzy option = new GameBoardOptions.Yatzy();
+        Assert.assertEquals(50, option.calculateScoreFromGivenDice(dice));
     }
 }
