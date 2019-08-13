@@ -9,7 +9,7 @@ public class GameBoardOptionsTest
         int[] pseudoDice = { 1, 1, 1, 1, 1};
         GameBoard testBoard = new GameBoard();
         //TODO: should be 50
-        Assert.assertEquals(5, testBoard.getSpecificOptionOnBoard("ONES").calculateScoreFromGivenDice(pseudoDice));
+        Assert.assertEquals(50, testBoard.getSpecificOptionOnBoard("YATZY").calculateScoreFromGivenDice(pseudoDice));
     }
 
     @Test
@@ -22,6 +22,14 @@ public class GameBoardOptionsTest
 
     @Test
     public void onePairCalculatesTheSumOfTheSinglePair()
+    {
+        int[] dice = { 1, 1, 2, 3, 4 };
+        GameBoardOptions.OnePair option = new GameBoardOptions.OnePair();
+        Assert.assertEquals(2, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
+    public void onePairCalculatesWhenThreeOfAKindIsPresent()
     {
         int[] dice = { 1, 1, 2, 3, 4 };
         GameBoardOptions.OnePair option = new GameBoardOptions.OnePair();
@@ -42,5 +50,44 @@ public class GameBoardOptionsTest
         int[] dice = { 3, 3, 1, 1, 4 };
         GameBoardOptions.OnePair option = new GameBoardOptions.OnePair();
         Assert.assertEquals(6, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
+    public void twoPairCalculatesTheSumCorrectly()
+    {
+        int[] dice = { 3, 3, 1, 1, 4 };
+        GameBoardOptions.TwoPair option = new GameBoardOptions.TwoPair();
+        Assert.assertEquals(8, option.calculateScoreFromGivenDice(dice));
+    }
+    @Test
+    public void twoPairCalculatesTheSumCorrectlyWhenFullhouseIsPresent()
+    {
+        int[] dice = { 3, 3, 1, 1, 1 };
+        GameBoardOptions.TwoPair option = new GameBoardOptions.TwoPair();
+        Assert.assertEquals(8, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
+    public void threeOfAKindCalculatesTheSumCorrectly()
+    {
+        int[] dice = { 3, 3, 3, 1, 1 };
+        GameBoardOptions.ThreeOfAKind option = new GameBoardOptions.ThreeOfAKind();
+        Assert.assertEquals(9, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
+    public void threeOfAKindCalculatesTheSumCorrectlyWithPairPrior()
+    {
+        int[] dice = { 1, 1, 3, 3, 3};
+        GameBoardOptions.ThreeOfAKind option = new GameBoardOptions.ThreeOfAKind();
+        Assert.assertEquals(9, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
+    public void fourOfAKindCalculatesTheSumCorrectly()
+    {
+        int[] dice = { 1, 3, 3, 3, 3};
+        GameBoardOptions.FourOfAKind option = new GameBoardOptions.FourOfAKind();
+        Assert.assertEquals(12, option.calculateScoreFromGivenDice(dice));
     }
 }
