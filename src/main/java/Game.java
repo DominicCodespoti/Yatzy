@@ -21,8 +21,8 @@ public class Game {
 
     private static boolean checkIfWinConditionIsMet(Player[] playerList) {
         int playersWithEmptyBoard = 0;
-        for (int playerListIterator = 0; playerListIterator < playerList.length; playerListIterator++) {
-            if (playerList[playerListIterator].getPersonalGameBoard().isGameBoardEmpty())
+        for (Player player : playerList) {
+            if (player.getPersonalGameBoard().isGameBoardEmpty())
                 playersWithEmptyBoard++;
         }
         if (playersWithEmptyBoard == playerList.length)
@@ -30,7 +30,7 @@ public class Game {
         return false;
     }
 
-    public static void startGame() throws InterruptedException {
+    private static void startGame() throws InterruptedException {
         Scanner readPlayerInput = new Scanner(System.in);
         int[] numbersToKeepWhenRerolling;
         Dice gameDice = new Dice();
@@ -46,6 +46,10 @@ public class Game {
             System.out.println("Great! You are playing solo, what is your name: ");
             playerInput = readPlayerInput.nextLine();
             listOfPlayers[0] = new Player(playerInput);
+            System.out.println("Would you like to flag yourself as a robot (0) or a normal player (1): ");
+            playerInput = readPlayerInput.nextLine();
+            if(playerInput.equals("0"))
+                listOfPlayers[0].setIsPlayerRobot(true);
         }
 
         if (playerInput.equals("1")) {
@@ -74,7 +78,7 @@ public class Game {
             }
         }
 
-        while (!checkIfWinConditionIsMet(listOfPlayers)) //TODO: create win condition for loop
+        while (!checkIfWinConditionIsMet(listOfPlayers))
         {
             playerInput = "1";
             while (Integer.parseInt(playerInput) != 0) {
