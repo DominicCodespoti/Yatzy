@@ -3,6 +3,8 @@ import com.sun.org.apache.bcel.internal.generic.PUSH;
 import java.util.Scanner;
 
 public class Game {
+    private static final int MAX_REROLL_COUNT = 3;
+
     public static void main(String[] args) throws InterruptedException {
         startGame();
     }
@@ -87,7 +89,7 @@ public class Game {
                     playerInput = "0";
                 }
 
-                while (Integer.parseInt(playerInput) == 1 && rerollCount < 4) {
+                while (Integer.parseInt(playerInput) == 1 && rerollCount < MAX_REROLL_COUNT) {
                     System.out.println("Please enter the numbers you would like to keep (Example: 2,3,1): ");
                     playerInput = readPlayerInput.nextLine();
 
@@ -98,7 +100,7 @@ public class Game {
                     gameDice.printAllDiceRollValues();
 
                     rerollCount++;
-                    System.out.println("You have " + (3 - rerollCount) + " rerolls left. Are you happy with these values (0), or would you like to reroll (1): ");
+                    System.out.println("You have " + (MAX_REROLL_COUNT - rerollCount - 1) + " rerolls left. Are you happy with these values (0), or would you like to reroll (1): ");
                     playerInput = readPlayerInput.nextLine();
                 }
             }
