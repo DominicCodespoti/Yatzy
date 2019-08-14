@@ -1,5 +1,3 @@
-import com.sun.org.apache.bcel.internal.generic.PUSH;
-
 import java.util.Scanner;
 
 public class Game {
@@ -25,9 +23,7 @@ public class Game {
             if (player.getPersonalGameBoard().isGameBoardEmpty())
                 playersWithEmptyBoard++;
         }
-        if (playersWithEmptyBoard == playerList.length)
-            return true;
-        return false;
+        return playersWithEmptyBoard == playerList.length;
     }
 
     private static void startGame() throws InterruptedException {

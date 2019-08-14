@@ -1,6 +1,9 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.maxBy;
+
 public interface GameBoardOptions {
     int calculateScoreFromGivenDice(int[] givenDice);
 
@@ -138,19 +141,10 @@ public interface GameBoardOptions {
         }
 
         public int calculateScoreFromGivenDice(int[] givenDice) {
-            HashMap<Integer, Integer> diceValueCounts = new HashMap<>();
-            for (int diceValue : givenDice)
-                diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
-
-            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getKey).collect(Collectors.toList());
-
-            if (pairs.isEmpty())
-                return 0;
-            try {
-                return Math.max(pairs.get(0), pairs.get(1)) * 2;
-            } catch (Exception e) {
-                return pairs.get(0) * 2;
-            }
+            Map<Integer, Integer> diceValueCounts;
+            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
+            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 1).map(Map.Entry::getKey).collect(Collectors.toList());
+            return pairs.stream().reduce(0, Math::max) * 2;
         }
 
         public String calculateStringForScoreBoard(int[] givenDice) {
@@ -167,11 +161,9 @@ public interface GameBoardOptions {
         }
 
         public int calculateScoreFromGivenDice(int[] givenDice) {
-            HashMap<Integer, Integer> diceValueCounts = new HashMap<>();
-            for (int diceValue : givenDice)
-                diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
-
-            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getKey).collect(Collectors.toList());
+            Map<Integer, Integer> diceValueCounts;
+            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
+            List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 1).map(Map.Entry::getKey).collect(Collectors.toList());
             if (pairs.isEmpty())
                 return 0;
             try {
@@ -195,12 +187,9 @@ public interface GameBoardOptions {
         }
 
         public int calculateScoreFromGivenDice(int[] givenDice) {
-            HashMap<Integer, Integer> diceValueCounts = new HashMap<>();
-            for (int diceValue : givenDice) {
-                diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
-            }
-
-            List<Integer> threeOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 2).map(Map.Entry::getKey).collect(Collectors.toList());
+            Map<Integer, Integer> diceValueCounts;
+            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> oldValue + 1));
+            List<Integer> threeOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 2).map(Map.Entry::getKey).collect(Collectors.toList());
             if (threeOfAKind.isEmpty())
                 return 0;
             return threeOfAKind.get(0) * 3;
@@ -220,12 +209,9 @@ public interface GameBoardOptions {
         }
 
         public int calculateScoreFromGivenDice(int[] givenDice) {
-            HashMap<Integer, Integer> diceValueCounts = new HashMap<>();
-            for (int diceValue : givenDice) {
-                diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
-            }
-
-            List<Integer> fourOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 3).map(Map.Entry::getKey).collect(Collectors.toList());
+            Map<Integer, Integer> diceValueCounts;
+            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> oldValue + 1));
+            List<Integer> fourOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 3).map(Map.Entry::getKey).collect(Collectors.toList());
             if (fourOfAKind.isEmpty())
                 return 0;
             return fourOfAKind.get(0) * 4;
