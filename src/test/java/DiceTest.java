@@ -30,4 +30,19 @@ public class DiceTest
             fiveRandomDice.printAllDiceRollValues();
         }
     }
+
+    @Test
+    public void rerollTwoSpecificDiceThatDontExist ()
+    {
+        Dice testDice;
+        int[] diceArray = {1,2,3,4,5};
+        int[] diceToKeepWhenRerolling = new int[1];
+        diceToKeepWhenRerolling[0] = 6;
+
+        for (int testIterator = 0; testIterator < 100; testIterator++)
+        {
+            testDice = new Dice();
+            testDice.rerollDiceWithoutSpecificValues(diceToKeepWhenRerolling);
+        }
+    }
 }

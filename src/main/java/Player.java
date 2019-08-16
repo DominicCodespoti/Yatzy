@@ -5,13 +5,16 @@ public class Player {
     private GameBoard personalGameBoard;
 
     public Player(String playerName) {
-        setPlayerScore(0);
         personalGameBoard = new GameBoard();
         this.playerName = playerName;
     }
 
     public boolean getIsPlayerRobot() {
         return isRobot;
+    }
+
+    public boolean getIsPlayerBoardEmpty() {
+        return personalGameBoard.isGameBoardEmpty();
     }
 
     public void setIsPlayerRobot(boolean robot) {
@@ -34,20 +37,10 @@ public class Player {
         return playerScore;
     }
 
-    public void setPlayerScore(int playerScore) {
-        this.playerScore = playerScore;
-    }
-
     public void addToPlayerScore(int playerScore) {
         this.playerScore += playerScore;
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public boolean isPlayerBoardEmpty() {
-        return personalGameBoard.isGameBoardEmpty();
-    }
+    public String getPlayerName() { return playerName; }
 }
 
