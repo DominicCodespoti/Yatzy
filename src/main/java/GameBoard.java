@@ -1,7 +1,7 @@
 public class GameBoard {
     private GameBoardOptions[] optionsOnGameBoard;
 
-    public static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] originalArray, int index) {
+    private static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] originalArray, int index) {
         if (originalArray == null || index < 0 || index >= originalArray.length) {
             return originalArray;
         }
@@ -16,17 +16,14 @@ public class GameBoard {
     }
 
     public boolean isGameBoardEmpty() {
-        if (optionsOnGameBoard.length == 0) {
-            return true;
-        }
-        return false;
+        return optionsOnGameBoard.length == 0;
     }
 
     public GameBoardOptions getSpecificOptionOnBoard(String userInput) {
-        for (int boardOptionIteratior = 0; boardOptionIteratior < optionsOnGameBoard.length; boardOptionIteratior++) {
-            if (optionsOnGameBoard[boardOptionIteratior].calculateBoardOptionID().equals(userInput.toLowerCase())) {
-                GameBoardOptions copyOfSelectedOption = optionsOnGameBoard[boardOptionIteratior];
-                optionsOnGameBoard = removeOptionFromGameBoardAtIndex(optionsOnGameBoard, boardOptionIteratior);
+        for (int boardOptionIterator = 0; boardOptionIterator < optionsOnGameBoard.length; boardOptionIterator++) {
+            if (optionsOnGameBoard[boardOptionIterator].calculateBoardOptionID().equals(userInput.toLowerCase())) {
+                GameBoardOptions copyOfSelectedOption = optionsOnGameBoard[boardOptionIterator];
+                optionsOnGameBoard = removeOptionFromGameBoardAtIndex(optionsOnGameBoard, boardOptionIterator);
                 return copyOfSelectedOption;
             }
         }
@@ -68,8 +65,8 @@ public class GameBoard {
 
     public void drawGameBoard(int[] givenDice) {
         System.out.println("---------------------------------");
-        for (int gameBoardIterator = 0; gameBoardIterator < optionsOnGameBoard.length; gameBoardIterator++) {
-            System.out.println(optionsOnGameBoard[gameBoardIterator].calculateStringForScoreBoard(givenDice));
+        for (GameBoardOptions gameBoardOptions : optionsOnGameBoard) {
+            System.out.println(gameBoardOptions.calculateStringForScoreBoard(givenDice));
         }
         System.out.println("---------------------------------");
     }

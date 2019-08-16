@@ -25,11 +25,11 @@ public class Dice {
         return diceRollValues;
     }
 
-    public void setSpecificDiceValue(int specificDice, int newDiceValue) {
+    private void setSpecificDiceValue(int specificDice, int newDiceValue) {
         diceRollValues[specificDice] = newDiceValue;
     }
 
-    public void simulateFiveDiceRolls() {
+    private void simulateFiveDiceRolls() {
         int randomInt = new Random().nextInt(6);
         for (int diceIterator = 0; diceIterator < 5; diceIterator++) {
             randomInt++;
@@ -42,7 +42,6 @@ public class Dice {
     {
         int[] copyOfCurrentDiceRollValues = diceRollValues.clone();
         simulateFiveDiceRolls();
-
         for (int diceIterator = 0; diceIterator < arrayOfDiceToKeep.length; diceIterator++)
             if (checkIfDiceRollMatchesValue(arrayOfDiceToKeep[diceIterator], copyOfCurrentDiceRollValues)) {
                 diceRollValues[diceIterator] = arrayOfDiceToKeep[diceIterator];

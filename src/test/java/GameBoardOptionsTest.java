@@ -47,6 +47,14 @@ public class GameBoardOptionsTest
     }
 
     @Test
+    public void onePairCalculatesTheSumOfTwoOfTheDiceWhenThereAreThree()
+    {
+        int[] dice = { 3, 3, 3, 1, 4 };
+        GameBoardOptions.OnePair option = new GameBoardOptions.OnePair();
+        Assert.assertEquals(6, option.calculateScoreFromGivenDice(dice));
+    }
+
+    @Test
     public void twoPairCalculatesTheSumCorrectly()
     {
         int[] dice = { 3, 3, 1, 1, 4 };

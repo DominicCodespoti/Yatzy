@@ -1,133 +1,157 @@
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class Game {
     private static final int MAX_REROLL_COUNT = 3;
+    private static Player[] listOfPlayers;
 
     public static void main(String[] args) throws InterruptedException {
         startGame();
     }
 
-    private static int[] convertStringArrayToIntArray(String[] strings) {
-        int[] intarray = new int[strings.length];
-        int i = 0;
-        for (String str : strings) {
-            intarray[i] = Integer.parseInt(str.trim());
-            i++;
-        }
-        return intarray;
+    private static void startGame() throws InterruptedException {
+        listOfPlayers = new Player[1];
+        initializePlayersBasedOnInput();
+        gameLoop();
+        OutputHandler.drawGameResults(listOfPlayers);
     }
 
     private static boolean checkIfWinConditionIsMet(Player[] playerList) {
         int playersWithEmptyBoard = 0;
         for (Player player : playerList) {
-            if (player.getPersonalGameBoard().isGameBoardEmpty())
+            if (player.getIsPlayerBoardEmpty())
                 playersWithEmptyBoard++;
         }
         return playersWithEmptyBoard == playerList.length;
     }
 
-    private static void startGame() throws InterruptedException {
-        Scanner readPlayerInput = new Scanner(System.in);
-        int[] numbersToKeepWhenRerolling;
-        Dice gameDice = new Dice();
+    private static void initializePlayersBasedOnInput() {
         String playerInput;
-        Player[] listOfPlayers = new Player[1];
-        int currentPlayerIterator = 0;
-        int rerollCount = 0;
-
         System.out.println("Welcome to Yatzy! Would you like to play solo (0), against others (1), or against robots (2): ");
-        playerInput = readPlayerInput.nextLine();
+        playerInput = InputHandler.validateAndReturnUserInputForChoices(System.in, 2);
 
-        if (playerInput.equals("0")) {
-            System.out.println("Great! You are playing solo, what is your name: ");
-            playerInput = readPlayerInput.nextLine();
-            listOfPlayers[0] = new Player(playerInput);
-            System.out.println("Would you like to flag yourself as a robot (0) or a normal player (1): ");
-            playerInput = readPlayerInput.nextLine();
-            if(playerInput.equals("0"))
-                listOfPlayers[0].setIsPlayerRobot(true);
-        }
-
-        if (playerInput.equals("1")) {
-            System.out.println("Great! How many other people are playing: ");
-            playerInput = readPlayerInput.nextLine();
-            listOfPlayers = new Player[Integer.parseInt(playerInput)];
-            for (int playerIterator = 0; playerIterator < listOfPlayers.length; playerIterator++) {
-                System.out.println("What is the name of Player " + playerIterator + ": ");
-                playerInput = readPlayerInput.nextLine();
-                listOfPlayers[playerIterator] = new Player(playerInput);
-            }
-        }
-
-        if (playerInput.equals("2")) {
-            System.out.println("Great! How many robots would you like to play against: ");
-            playerInput = String.valueOf(Integer.parseInt(readPlayerInput.nextLine()) + 1);
-            listOfPlayers = new Player[Integer.parseInt(playerInput)];
-            System.out.println("What is, what is your name: ");
-            playerInput = readPlayerInput.nextLine();
-            listOfPlayers[0] = new Player(playerInput);
-            for (int playerIterator = 1; playerIterator < listOfPlayers.length; playerIterator++) {
-                System.out.println("What is the name of Robot " + playerIterator + ": ");
-                playerInput = readPlayerInput.nextLine();
-                listOfPlayers[playerIterator] = new Player(playerInput);
-                listOfPlayers[playerIterator].setIsPlayerRobot(true);
-            }
-        }
-
-        while (!checkIfWinConditionIsMet(listOfPlayers))
-        {
-            playerInput = "1";
-            while (Integer.parseInt(playerInput) != 0) {
-                gameDice.simulateFiveDiceRolls();
-                gameDice.printAllDiceRollValues();
-
-                System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", are you happy with these values (0), or would you like to reroll (1): ");
-                if (!listOfPlayers[currentPlayerIterator].getIsPlayerRobot())
-                    playerInput = readPlayerInput.nextLine();
-                else {
-                    Thread.sleep(2000);
-                    playerInput = "0";
+        switch (playerInput) {
+            case "0":
+                System.out.println("Great! You are playing solo, what is your name: ");
+                playerInput = InputHandler.validateAndReturnUserInputForNames(System.in);
+                listOfPlayers[0] = new Player(playerInput);
+                System.out.println("Would you like to flag yourself as a robot (0) or a normal player (1): ");
+                playerInput = InputHandler.validateAndReturnUserInputForChoices(System.in, 1);
+                if (playerInput.equals("0"))
+                    listOfPlayers[0].setIsPlayerRobot(true);
+                break;
+            case "1":
+                System.out.println("Great! How many other people are playing: ");
+                playerInput = InputHandler.validateAndReturnUserInputForNumbers(System.in);
+                listOfPlayers = new Player[Integer.parseInt(playerInput)];
+                for (int playerIterator = 0; playerIterator < listOfPlayers.length; playerIterator++) {
+                    System.out.println("What is the name of Player " + playerIterator + ": ");
+                    playerInput = InputHandler.validateAndReturnUserInputForNames(System.in);
+                    listOfPlayers[playerIterator] = new Player(playerInput);
                 }
-
-                while (Integer.parseInt(playerInput) == 1 && rerollCount < MAX_REROLL_COUNT) {
-                    System.out.println("Please enter the numbers you would like to keep (Example: 2,3,1): ");
-                    playerInput = readPlayerInput.nextLine();
-
-                    String[] rawNumbersToKeepWhenRerolling = playerInput.split(",");
-                    numbersToKeepWhenRerolling = convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
-
-                    gameDice.rerollDiceWithoutSpecificValues(numbersToKeepWhenRerolling);
-                    gameDice.printAllDiceRollValues();
-
-                    rerollCount++;
-                    System.out.println("You have " + (MAX_REROLL_COUNT - rerollCount - 1) + " rerolls left. Are you happy with these values (0), or would you like to reroll (1): ");
-                    playerInput = readPlayerInput.nextLine();
+                break;
+            case "2":
+                System.out.println("Great! How many robots would you like to play against: ");
+                playerInput = String.valueOf(Integer.parseInt(InputHandler.validateAndReturnUserInputForNumbers(System.in)) + 1);
+                listOfPlayers = new Player[Integer.parseInt(playerInput)];
+                System.out.println("What is, what is your name: ");
+                playerInput = InputHandler.validateAndReturnUserInputForNames(System.in);
+                listOfPlayers[0] = new Player(playerInput);
+                for (int playerIterator = 1; playerIterator < listOfPlayers.length; playerIterator++) {
+                    System.out.println("What is the name of Robot " + playerIterator + ": ");
+                    playerInput = InputHandler.validateAndReturnUserInputForNames(System.in);
+                    listOfPlayers[playerIterator] = new Player(playerInput);
+                    listOfPlayers[playerIterator].setIsPlayerRobot(true);
                 }
-            }
+                break;
+        }
+    }
 
-            System.out.println("Here are the possible options on your scoreboard, please enter the name of the option you would like to pick: ");
-            listOfPlayers[currentPlayerIterator].getPersonalGameBoard().drawGameBoard(gameDice.getAllDiceValues());
+
+    private static int changeCurrentPlayerTurn(int currentPlayerIterator, Player[] listOfPlayers) {
+        System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", your score is now:  " + listOfPlayers[currentPlayerIterator].getPlayerScore());
+        if (currentPlayerIterator < listOfPlayers.length - 1) {
+            System.out.println("It is now " + listOfPlayers[currentPlayerIterator + 1].getPlayerName() + "'s turn!");
+            currentPlayerIterator++;
+            return currentPlayerIterator;
+        } else {
+            System.out.println("It is now " + listOfPlayers[0].getPlayerName() + "'s turn!");
+            currentPlayerIterator = 0;
+            return currentPlayerIterator;
+        }
+    }
+
+    private static Dice diceRollLoop(int currentPlayerIterator) throws InterruptedException {
+        int rerollCount = 1;
+        String playerInput = "1";
+
+        Dice gameDice = null;
+        while (Integer.parseInt(playerInput) != 0 && rerollCount != 3) {
+            gameDice = new Dice();
+            gameDice.printAllDiceRollValues();
+            boolean invalidReroll = false;
+
+            System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", are you happy with these values (0), or would you like to reroll (1): ");
+
             if (!listOfPlayers[currentPlayerIterator].getIsPlayerRobot())
-                playerInput = readPlayerInput.nextLine();
+                playerInput = InputHandler.validateAndReturnUserInputForChoices(System.in, 1);
             else {
                 Thread.sleep(2000);
-                playerInput = listOfPlayers[currentPlayerIterator].selectHighestOptionOnGameBoardOption(gameDice.getAllDiceValues());
+                playerInput = "0";
             }
 
-            int currentScore = listOfPlayers[currentPlayerIterator].selectGameBoardOption(playerInput, gameDice.getAllDiceValues());
-            listOfPlayers[currentPlayerIterator].addToPlayerScore(currentScore);
+            while (Integer.parseInt(playerInput) == 1 && rerollCount < MAX_REROLL_COUNT) {
+                System.out.println("Please enter the numbers you would like to keep (Example: 2,3,1): ");
+                playerInput = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
 
-            System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", your score is now:  " + listOfPlayers[currentPlayerIterator].getPlayerScore());
+                while (!invalidReroll) {
+                    int amountOfDiceToRerollMatchGameDice = 0;
+                    String[] rawNumbersToKeepWhenRerolling = playerInput.split(",");
+                    int[] numbersToKeepWhenRerolling = Utilities.convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
 
-            rerollCount = 0;
-            if (currentPlayerIterator < listOfPlayers.length - 1) {
-                System.out.println("It is now " + listOfPlayers[currentPlayerIterator + 1].getPlayerName() + "'s turn!");
-                currentPlayerIterator++;
-            } else {
-                System.out.println("It is now " + listOfPlayers[0].getPlayerName() + "'s turn!");
-                currentPlayerIterator = 0;
+                    Iterator<?> iter1 = Arrays.stream(numbersToKeepWhenRerolling).iterator(), iter2 = Arrays.stream(gameDice.getAllDiceValues()).iterator();
+                    while (iter1.hasNext() && iter2.hasNext())
+                        if (iter1.next() == iter2.next())
+                            amountOfDiceToRerollMatchGameDice++;
+
+                    if (amountOfDiceToRerollMatchGameDice != numbersToKeepWhenRerolling.length) {
+                        System.out.println("Error: The dice you attempted to reroll do not match the below dice, try again: ");
+                        gameDice.printAllDiceRollValues();
+                        gameDice.rerollDiceWithoutSpecificValues(numbersToKeepWhenRerolling);
+                    } else {
+                        gameDice.rerollDiceWithoutSpecificValues(numbersToKeepWhenRerolling);
+                        gameDice.printAllDiceRollValues();
+                        invalidReroll = true;
+                    }
+                }
+                rerollCount++;
+                System.out.println("You have " + (MAX_REROLL_COUNT - rerollCount) + " rerolls left. Are you happy with these values (0), or would you like to reroll (1): ");
+                playerInput = InputHandler.validateAndReturnUserInputForChoices(System.in, 1);
             }
         }
-        System.out.println("Game over!");
+        return gameDice;
+    }
+
+    private static void playerSelectGameOption(Dice gameDice, int currentPlayerIterator) throws InterruptedException {
+        System.out.println("Here are the possible options on your scoreboard, please enter the name of the option you would like to pick: ");
+        String playerInput;
+        listOfPlayers[currentPlayerIterator].getPersonalGameBoard().drawGameBoard(gameDice.getAllDiceValues());
+        if (!listOfPlayers[currentPlayerIterator].getIsPlayerRobot())
+            playerInput = InputHandler.validateAndReturnUserInputForGameBoardOptions(listOfPlayers[currentPlayerIterator].getPersonalGameBoard(), System.in);
+        else {
+            Thread.sleep(2000);
+            playerInput = listOfPlayers[currentPlayerIterator].selectHighestOptionOnGameBoardOption(gameDice.getAllDiceValues());
+        }
+        int currentScore = listOfPlayers[currentPlayerIterator].selectGameBoardOption(playerInput, gameDice.getAllDiceValues());
+        listOfPlayers[currentPlayerIterator].addToPlayerScore(currentScore);
+    }
+
+    private static void gameLoop() throws InterruptedException {
+        int currentPlayerIterator = 0;
+        while (!checkIfWinConditionIsMet(listOfPlayers)) {
+            playerSelectGameOption(diceRollLoop(currentPlayerIterator), currentPlayerIterator);
+            currentPlayerIterator = changeCurrentPlayerTurn(currentPlayerIterator, listOfPlayers);
+        }
     }
 }
+
