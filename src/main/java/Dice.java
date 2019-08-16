@@ -1,11 +1,15 @@
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class Dice {
     private int[] diceRollValues;
+    private final int NUMBER_OF_DICE = 5;
+    private final int NUMBER_OF_SIDES = 6;
 
     public Dice() {
-        diceRollValues = new int[5];
-        simulateFiveDiceRolls();
+        diceRollValues = new int[NUMBER_OF_DICE];
+        diceRollValues = simulateFiveDiceRolls();
     }
 
     public boolean checkIfDiceRollMatchesValue(int valueBeingSearchedFor, int[] diceArrayToCheck) {
@@ -25,17 +29,10 @@ public class Dice {
         return diceRollValues;
     }
 
-    private void setSpecificDiceValue(int specificDice, int newDiceValue) {
-        diceRollValues[specificDice] = newDiceValue;
-    }
-
-    private void simulateFiveDiceRolls() {
-        int randomInt = new Random().nextInt(6);
-        for (int diceIterator = 0; diceIterator < 5; diceIterator++) {
-            randomInt++;
-            setSpecificDiceValue(diceIterator, randomInt);
-            randomInt = new Random().nextInt(6);
-        }
+    private int[] simulateFiveDiceRolls() {
+        return Arrays.stream(new int[5])
+                .map(number -> (new Random().nextInt(NUMBER_OF_SIDES) + 1))
+                .toArray();
     }
 
     public void rerollDiceWithoutSpecificValues(int[] arrayOfDiceToKeep) // 1,2
