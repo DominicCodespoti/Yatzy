@@ -47,12 +47,4 @@ public class Dice {
                 diceRollValues[diceIterator] = arrayOfDiceToKeep[diceIterator];
             }
     }
-
-    public void printAllDiceRollValues() {
-        for (int diceIterator = 0; diceIterator < 5; diceIterator++)
-            if (diceIterator < 4)
-                System.out.print(diceRollValues[diceIterator] + ", ");
-            else
-                System.out.print(diceRollValues[diceIterator] + "\n");
-    }
 }

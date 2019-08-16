@@ -57,6 +57,10 @@ public class Game {
                 System.out.println("What is, what is your name: ");
                 playerInput = InputHandler.validateAndReturnUserInputForNames(System.in);
                 listOfPlayers[0] = new Player(playerInput);
+                System.out.println("Would you like to flag yourself as a robot (0) or a normal player (1): ");
+                playerInput = InputHandler.validateAndReturnUserInputForChoices(System.in, 1);
+                if (playerInput.equals("0"))
+                    listOfPlayers[0].setIsPlayerRobot(true);
                 for (int playerIterator = 1; playerIterator < listOfPlayers.length; playerIterator++) {
                     System.out.println("What is the name of Robot " + playerIterator + ": ");
                     playerInput = InputHandler.validateAndReturnUserInputForNames(System.in);
@@ -66,7 +70,6 @@ public class Game {
                 break;
         }
     }
-
 
     private static int changeCurrentPlayerTurn(int currentPlayerIterator, Player[] listOfPlayers) {
         System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", your score is now:  " + listOfPlayers[currentPlayerIterator].getPlayerScore());
@@ -88,7 +91,7 @@ public class Game {
         Dice gameDice = null;
         while (Integer.parseInt(playerInput) != 0 && rerollCount != 3) {
             gameDice = new Dice();
-            gameDice.printAllDiceRollValues();
+            OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
             boolean invalidReroll = false;
 
             System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", are you happy with these values (0), or would you like to reroll (1): ");
@@ -103,24 +106,25 @@ public class Game {
             while (Integer.parseInt(playerInput) == 1 && rerollCount < MAX_REROLL_COUNT) {
                 System.out.println("Please enter the numbers you would like to keep (Example: 2,3,1): ");
                 playerInput = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
+                String[] rawNumbersToKeepWhenRerolling = playerInput.split(",");
+                int[] numbersToKeepWhenRerolling = Utilities.convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
 
-                while (!invalidReroll) {
+                while (!invalidReroll) { //TODO: Fix bug where correct reroll fails
                     int amountOfDiceToRerollMatchGameDice = 0;
-                    String[] rawNumbersToKeepWhenRerolling = playerInput.split(",");
-                    int[] numbersToKeepWhenRerolling = Utilities.convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
-
-                    Iterator<?> iter1 = Arrays.stream(numbersToKeepWhenRerolling).iterator(), iter2 = Arrays.stream(gameDice.getAllDiceValues()).iterator();
+                    Iterator<?> iter1 = Arrays.stream(gameDice.getAllDiceValues()).iterator(), iter2 = Arrays.stream(numbersToKeepWhenRerolling).iterator();
                     while (iter1.hasNext() && iter2.hasNext())
                         if (iter1.next() == iter2.next())
                             amountOfDiceToRerollMatchGameDice++;
 
                     if (amountOfDiceToRerollMatchGameDice != numbersToKeepWhenRerolling.length) {
                         System.out.println("Error: The dice you attempted to reroll do not match the below dice, try again: ");
-                        gameDice.printAllDiceRollValues();
-                        gameDice.rerollDiceWithoutSpecificValues(numbersToKeepWhenRerolling);
+                        OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
+                        playerInput = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
+                        rawNumbersToKeepWhenRerolling = playerInput.split(",");
+                        numbersToKeepWhenRerolling = Utilities.convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
                     } else {
                         gameDice.rerollDiceWithoutSpecificValues(numbersToKeepWhenRerolling);
-                        gameDice.printAllDiceRollValues();
+                        OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
                         invalidReroll = true;
                     }
                 }
