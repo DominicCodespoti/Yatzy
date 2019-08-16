@@ -17,7 +17,6 @@ public class DiceTest
     {
         Dice fiveRandomDice = new Dice();
         int[] diceToKeepWhenRerolling = new int[1];
-        fiveRandomDice.printAllDiceRollValues();
 
         for (int testIterator = 0; testIterator < 100; testIterator++)
         {
@@ -27,7 +26,6 @@ public class DiceTest
 
             Assert.assertTrue(fiveRandomDice.checkIfDiceRollMatchesValue(diceToKeepWhenRerolling[0], fiveRandomDice.getAllDiceValues()));
 
-            fiveRandomDice.printAllDiceRollValues();
         }
     }
 

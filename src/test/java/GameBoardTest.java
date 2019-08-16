@@ -8,7 +8,6 @@ public class GameBoardTest
     {
         Dice testDice = new Dice();
         GameBoard testBoard = new GameBoard();
-        testDice.printAllDiceRollValues();
         testBoard.drawGameBoard(testDice.getAllDiceValues());
     }
 
