@@ -21,7 +21,7 @@ final public class InputHandler {
     {
         Scanner initialInputReader = new Scanner(inputStream);
         String userInput = initialInputReader.nextLine();
-        if (!(Pattern.compile("[0-9]*").matcher(userInput).find())) {
+        if ((Pattern.compile("[0-9]*").matcher(userInput).find())) {
             return userInput;
         } else {
             System.out.println("Error: Input does not match pattern of 'number' (5) or 'number comma number repeat' (5,4) pattern, try again:");
