@@ -16,31 +16,37 @@ public class DiceTest
     public void rerollTwoSpecificDice ()
     {
         Dice fiveRandomDice = new Dice();
-        int[] diceToKeepWhenRerolling = new int[1];
+        int[] diceToKeepWhenRerolling = new int[2];
 
         for (int testIterator = 0; testIterator < 100; testIterator++)
         {
             diceToKeepWhenRerolling[0] = fiveRandomDice.getSpecificDiceRollsValue(0);
-
-            fiveRandomDice.rerollDiceWithoutSpecificValues(diceToKeepWhenRerolling);
-
-            Assert.assertTrue(fiveRandomDice.checkIfDiceRollMatchesValue(diceToKeepWhenRerolling[0], fiveRandomDice.getAllDiceValues()));
-
+            diceToKeepWhenRerolling[1] = fiveRandomDice.getSpecificDiceRollsValue(1);
+            fiveRandomDice = new Dice(diceToKeepWhenRerolling);
         }
+        Assert.assertEquals(diceToKeepWhenRerolling[0], fiveRandomDice.getAllDiceValues()[0]);
+        Assert.assertEquals(diceToKeepWhenRerolling[1], fiveRandomDice.getAllDiceValues()[1]);
     }
 
     @Test
-    public void rerollTwoSpecificDiceThatDontExist ()
+    public void keepAllDiceOnReroll ()
     {
-        Dice testDice;
-        int[] diceArray = {1,2,3,4,5};
-        int[] diceToKeepWhenRerolling = new int[1];
-        diceToKeepWhenRerolling[0] = 6;
+        Dice fiveRandomDice = new Dice();
+        int[] diceToKeepWhenRerolling = new int[5];
 
         for (int testIterator = 0; testIterator < 100; testIterator++)
         {
-            testDice = new Dice();
-            testDice.rerollDiceWithoutSpecificValues(diceToKeepWhenRerolling);
+            diceToKeepWhenRerolling[0] = fiveRandomDice.getSpecificDiceRollsValue(0);
+            diceToKeepWhenRerolling[1] = fiveRandomDice.getSpecificDiceRollsValue(1);
+            diceToKeepWhenRerolling[2] = fiveRandomDice.getSpecificDiceRollsValue(2);
+            diceToKeepWhenRerolling[3] = fiveRandomDice.getSpecificDiceRollsValue(3);
+            diceToKeepWhenRerolling[4] = fiveRandomDice.getSpecificDiceRollsValue(4);
+            fiveRandomDice = new Dice(diceToKeepWhenRerolling);
         }
+        Assert.assertEquals(diceToKeepWhenRerolling[0], fiveRandomDice.getAllDiceValues()[0]);
+        Assert.assertEquals(diceToKeepWhenRerolling[1], fiveRandomDice.getAllDiceValues()[1]);
+        Assert.assertEquals(diceToKeepWhenRerolling[2], fiveRandomDice.getAllDiceValues()[2]);
+        Assert.assertEquals(diceToKeepWhenRerolling[3], fiveRandomDice.getAllDiceValues()[3]);
+        Assert.assertEquals(diceToKeepWhenRerolling[4], fiveRandomDice.getAllDiceValues()[4]);
     }
 }
