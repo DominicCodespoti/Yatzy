@@ -1,6 +1,29 @@
 public class GameBoard {
     private GameBoardOptions[] optionsOnGameBoard;
 
+    public GameBoard() {
+        optionsOnGameBoard = new GameBoardOptions[15];
+        optionsOnGameBoard[0] = new GameBoardOptions.Ones();
+        optionsOnGameBoard[1] = new GameBoardOptions.Twos();
+        optionsOnGameBoard[2] = new GameBoardOptions.Threes();
+        optionsOnGameBoard[3] = new GameBoardOptions.Fours();
+        optionsOnGameBoard[4] = new GameBoardOptions.Fives();
+        optionsOnGameBoard[5] = new GameBoardOptions.Sixes();
+        optionsOnGameBoard[6] = new GameBoardOptions.OnePair();
+        optionsOnGameBoard[7] = new GameBoardOptions.TwoPair();
+        optionsOnGameBoard[8] = new GameBoardOptions.ThreeOfAKind();
+        optionsOnGameBoard[9] = new GameBoardOptions.FourOfAKind();
+        optionsOnGameBoard[10] = new GameBoardOptions.SmallStraight();
+        optionsOnGameBoard[11] = new GameBoardOptions.LargeStraight();
+        optionsOnGameBoard[12] = new GameBoardOptions.Chance();
+        optionsOnGameBoard[13] = new GameBoardOptions.FullHouse();
+        optionsOnGameBoard[14] = new GameBoardOptions.Yatzy();
+    }
+
+    public GameBoard(GameBoard anotherGameBoard) {
+        this.optionsOnGameBoard = anotherGameBoard.optionsOnGameBoard;
+    }
+
     private static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] originalArray, int index) {
         if (originalArray == null || index < 0 || index >= originalArray.length) {
             return originalArray;
@@ -30,25 +53,6 @@ public class GameBoard {
         return null;
     }
 
-    public GameBoard() {
-        optionsOnGameBoard = new GameBoardOptions[15];
-        optionsOnGameBoard[0] = new GameBoardOptions.Ones();
-        optionsOnGameBoard[1] = new GameBoardOptions.Twos();
-        optionsOnGameBoard[2] = new GameBoardOptions.Threes();
-        optionsOnGameBoard[3] = new GameBoardOptions.Fours();
-        optionsOnGameBoard[4] = new GameBoardOptions.Fives();
-        optionsOnGameBoard[5] = new GameBoardOptions.Sixes();
-        optionsOnGameBoard[6] = new GameBoardOptions.OnePair();
-        optionsOnGameBoard[7] = new GameBoardOptions.TwoPair();
-        optionsOnGameBoard[8] = new GameBoardOptions.ThreeOfAKind();
-        optionsOnGameBoard[9] = new GameBoardOptions.FourOfAKind();
-        optionsOnGameBoard[10] = new GameBoardOptions.SmallStraight();
-        optionsOnGameBoard[11] = new GameBoardOptions.LargeStraight();
-        optionsOnGameBoard[12] = new GameBoardOptions.Chance();
-        optionsOnGameBoard[13] = new GameBoardOptions.FullHouse();
-        optionsOnGameBoard[14] = new GameBoardOptions.Yatzy();
-    }
-
     public String getHighestScoringOptionID(int[] givenDice) {
         int highestScoringOptionValue = 0;
         int highestScoringOptionIndex = 0;
@@ -63,11 +67,7 @@ public class GameBoard {
         return optionsOnGameBoard[highestScoringOptionIndex].calculateBoardOptionID();
     }
 
-    public void drawGameBoard(int[] givenDice) {
-        System.out.println("---------------------------------");
-        for (GameBoardOptions gameBoardOptions : optionsOnGameBoard) {
-            System.out.println(gameBoardOptions.calculateStringForScoreBoard(givenDice));
-        }
-        System.out.println("---------------------------------");
+    GameBoardOptions[] getOptionsOnGameBoard() {
+        return optionsOnGameBoard;
     }
 }

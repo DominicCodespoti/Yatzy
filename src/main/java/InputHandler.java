@@ -1,6 +1,5 @@
 import java.io.InputStream;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 final public class InputHandler {
 
@@ -8,7 +7,8 @@ final public class InputHandler {
     {
         Scanner initialInputReader = new Scanner(inputStream);
         String userInput = initialInputReader.nextLine();
-        if (gameBoardReference.getSpecificOptionOnBoard(userInput) != null) {
+        GameBoard copyOfPlayerBoard = new GameBoard(gameBoardReference);
+        if (copyOfPlayerBoard.getSpecificOptionOnBoard(userInput) != null) {
             return userInput;
         } else {
             System.out.println("Error: Input is not one of the possible board options, try again:");
@@ -21,10 +21,10 @@ final public class InputHandler {
     {
         Scanner initialInputReader = new Scanner(inputStream);
         String userInput = initialInputReader.nextLine();
-        if ((Pattern.compile("[0-9]*").matcher(userInput).find())) {
+        if (userInput.matches("[0-9]*"))
             return userInput;
-        } else {
-            System.out.println("Error: Input does not match pattern of 'number' (5) or 'number comma number repeat' (5,4) pattern, try again:");
+        else {
+            System.out.println("Error: Input is not entirely made up of integers, try again:");
             validateAndReturnUserInputForNumbers(inputStream);
         }
         return "Error";

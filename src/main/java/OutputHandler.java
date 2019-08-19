@@ -17,4 +17,11 @@ final public class OutputHandler {
             else
                 System.out.print(diceRollValues[diceIterator] + "\n");
     }
+
+    public static void drawGameBoard(int[] givenDice, GameBoard givenGameBoard) {
+        System.out.println("---------------------------------");
+        for (GameBoardOptions gameBoardOptions : givenGameBoard.getOptionsOnGameBoard())
+            System.out.println(gameBoardOptions.calculateStringForScoreBoard(givenDice));
+        System.out.println("---------------------------------");
+    }
 }

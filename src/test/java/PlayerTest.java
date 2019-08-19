@@ -40,7 +40,7 @@ public class PlayerTest
     {
         Player testPlayer = new Player("testRobot");
         int[] diceArray = {5,5,6,6,6};
-        testPlayer.getPersonalGameBoard().drawGameBoard(diceArray);
+        OutputHandler.drawGameBoard(diceArray ,testPlayer.getPersonalGameBoard());
         Assert.assertEquals("chance", testPlayer.selectHighestOptionOnGameBoardOption(diceArray));
     }
 
@@ -50,7 +50,7 @@ public class PlayerTest
         Player testPlayer = new Player("testRobot");
         int[] diceArray = {5,5,6,6,6};
         testPlayer.getPersonalGameBoard().getSpecificOptionOnBoard("chance");
-        testPlayer.getPersonalGameBoard().drawGameBoard(diceArray);
+        OutputHandler.drawGameBoard(diceArray ,testPlayer.getPersonalGameBoard());
         Assert.assertEquals("full house", testPlayer.selectHighestOptionOnGameBoardOption(diceArray));
     }
 

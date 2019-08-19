@@ -4,14 +4,6 @@ import org.junit.Test;
 public class GameBoardTest
 {
     @Test
-    public void printBoardWorks ()
-    {
-        Dice testDice = new Dice();
-        GameBoard testBoard = new GameBoard();
-        testBoard.drawGameBoard(testDice.getAllDiceValues());
-    }
-
-    @Test
     public void testCalculateHighestScore ()
     {
         int[] testDice = { 3, 3, 5 ,5 ,5};

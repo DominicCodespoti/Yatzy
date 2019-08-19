@@ -9,16 +9,32 @@ public class Player {
         this.playerName = playerName;
     }
 
-    public boolean getIsPlayerRobot() {
-        return isRobot;
+    public GameBoard getPersonalGameBoard() {
+        return personalGameBoard;
+    }
+
+    public int getPlayerScore() {
+        return playerScore;
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
     public boolean getIsPlayerBoardEmpty() {
         return personalGameBoard.isGameBoardEmpty();
     }
 
+    public boolean getIsPlayerRobot() {
+        return isRobot;
+    }
+
     public void setIsPlayerRobot(boolean robot) {
         isRobot = robot;
+    }
+
+    public void addToPlayerScore(int playerScore) {
+        this.playerScore += playerScore;
     }
 
     public int selectGameBoardOption(String selectedOption, int[] givenDice) {
@@ -28,19 +44,5 @@ public class Player {
     public String selectHighestOptionOnGameBoardOption(int[] givenDice) {
         return personalGameBoard.getHighestScoringOptionID(givenDice);
     }
-
-    public GameBoard getPersonalGameBoard() {
-        return personalGameBoard;
-    }
-
-    public int getPlayerScore() {
-        return playerScore;
-    }
-
-    public void addToPlayerScore(int playerScore) {
-        this.playerScore += playerScore;
-    }
-
-    public String getPlayerName() { return playerName; }
 }
 
