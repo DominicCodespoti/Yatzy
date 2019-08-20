@@ -44,7 +44,7 @@ public class GameBoard {
 
     public GameBoardOptions getSpecificOptionOnBoard(String userInput) {
         for (int boardOptionIterator = 0; boardOptionIterator < optionsOnGameBoard.length; boardOptionIterator++) {
-            if (optionsOnGameBoard[boardOptionIterator].calculateBoardOptionID().equals(userInput.toLowerCase())) {
+            if (optionsOnGameBoard[boardOptionIterator].optionName().toLowerCase().equals(userInput.toLowerCase())) {
                 GameBoardOptions copyOfSelectedOption = optionsOnGameBoard[boardOptionIterator];
                 optionsOnGameBoard = removeOptionFromGameBoardAtIndex(optionsOnGameBoard, boardOptionIterator);
                 return copyOfSelectedOption;
@@ -64,7 +64,7 @@ public class GameBoard {
                     highestScoringOptionValue = optionsOnGameBoard[boardOptionIteratorAhead].calculateScoreFromGivenDice(givenDice);
                 }
         }
-        return optionsOnGameBoard[highestScoringOptionIndex].calculateBoardOptionID();
+        return optionsOnGameBoard[highestScoringOptionIndex].optionName();
     }
 
     GameBoardOptions[] getOptionsOnGameBoard() {

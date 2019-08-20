@@ -20,9 +20,11 @@ final public class OutputHandler {
     }
 
     public static void drawGameBoard(Dice gameDice, GameBoard givenGameBoard) {
-        System.out.println("---------------------------------");
-        for (GameBoardOptions gameBoardOptions : givenGameBoard.getOptionsOnGameBoard())
-            System.out.println(gameBoardOptions.calculateStringForScoreBoard(gameDice));
-        System.out.println("---------------------------------");
+        System.out.println(String.format("%030d", 0).replace("0", "-"));
+        for (GameBoardOptions gameBoardOptions : givenGameBoard.getOptionsOnGameBoard()) {
+            int score = gameBoardOptions.calculateScoreFromGivenDice(gameDice);
+            System.out.println(String.format("| %-20s | %3d |", gameBoardOptions.optionName(), score));
+        }
+        System.out.println(String.format("%030d", 0).replace("0", "-"));
     }
 }

@@ -9,11 +9,11 @@ public interface GameBoardOptions {
 
     String calculateStringForScoreBoard(Dice givenDice);
 
-    String calculateBoardOptionID();
+    String optionName();
 
     class Ones implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "ones";
+        public String optionName() {
+            return "Ones";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -29,8 +29,8 @@ public interface GameBoardOptions {
     }
 
     class Twos implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "twos";
+        public String optionName() {
+            return "Twos";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -46,8 +46,8 @@ public interface GameBoardOptions {
     }
 
     class Threes implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "threes";
+        public String optionName() {
+            return "Threes";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -63,8 +63,8 @@ public interface GameBoardOptions {
     }
 
     class Fours implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "fours";
+        public String optionName() {
+            return "Fours";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -80,8 +80,8 @@ public interface GameBoardOptions {
     }
 
     class Fives implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "fives";
+        public String optionName() {
+            return "Fives";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -97,8 +97,8 @@ public interface GameBoardOptions {
     }
 
     class Sixes implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "sixes";
+        public String optionName() {
+            return "Sixes";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -115,8 +115,8 @@ public interface GameBoardOptions {
 
     class OnePair implements GameBoardOptions {
         @Override
-        public String calculateBoardOptionID() {
-            return "one pair";
+        public String optionName() {
+            return "One Pair";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -136,8 +136,8 @@ public interface GameBoardOptions {
 
     class TwoPair implements GameBoardOptions {
         @Override
-        public String calculateBoardOptionID() {
-            return "two pair";
+        public String optionName() {
+            return "Two Pair";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -162,8 +162,8 @@ public interface GameBoardOptions {
     }
 
     class ThreeOfAKind implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "three of a kind";
+        public String optionName() {
+            return "Three of a Kind";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -184,8 +184,8 @@ public interface GameBoardOptions {
     }
 
     class FourOfAKind implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "four of a kind";
+        public String optionName() {
+            return "Four of a Kind";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -206,8 +206,8 @@ public interface GameBoardOptions {
     }
 
     class SmallStraight implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "small straight";
+        public String optionName() {
+            return "Small Straight";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -228,8 +228,8 @@ public interface GameBoardOptions {
     }
 
     class LargeStraight implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "large straight";
+        public String optionName() {
+            return "Large Straight";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -250,8 +250,8 @@ public interface GameBoardOptions {
     }
 
     class Chance implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "chance";
+        public String optionName() {
+            return "Chance";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -267,8 +267,8 @@ public interface GameBoardOptions {
     }
 
     class FullHouse implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "full house";
+        public String optionName() {
+            return "Full House";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
@@ -294,8 +294,8 @@ public interface GameBoardOptions {
     }
 
     class Yatzy implements GameBoardOptions {
-        public String calculateBoardOptionID() {
-            return "yatzy";
+        public String optionName() {
+            return "Yatzy";
         }
 
         public int calculateScoreFromGivenDice(Dice dice) {
