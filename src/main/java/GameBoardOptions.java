@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 public interface GameBoardOptions {
     int calculateScoreFromGivenDice(Dice dice);
 
-    String calculateStringForScoreBoard(Dice givenDice);
-
     String optionName();
 
     class Ones implements GameBoardOptions {
@@ -18,13 +16,6 @@ public interface GameBoardOptions {
 
         public int calculateScoreFromGivenDice(Dice dice) {
             return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 1).count();
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Ones               |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Ones               |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -36,13 +27,6 @@ public interface GameBoardOptions {
         public int calculateScoreFromGivenDice(Dice dice) {
             return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 2).count() * 2;
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Twos               |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Twos               |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class Threes implements GameBoardOptions {
@@ -52,13 +36,6 @@ public interface GameBoardOptions {
 
         public int calculateScoreFromGivenDice(Dice dice) {
             return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 3).count() * 3;
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Threes             |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Threes             |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -70,13 +47,6 @@ public interface GameBoardOptions {
         public int calculateScoreFromGivenDice(Dice dice) {
             return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 4).count() * 4;
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Fours              |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Fours              |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class Fives implements GameBoardOptions {
@@ -87,13 +57,6 @@ public interface GameBoardOptions {
         public int calculateScoreFromGivenDice(Dice dice) {
             return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 5).count() * 5;
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Fives              |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Fives              |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class Sixes implements GameBoardOptions {
@@ -103,13 +66,6 @@ public interface GameBoardOptions {
 
         public int calculateScoreFromGivenDice(Dice dice) {
             return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 6).count() * 6;
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Sixes              |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Sixes              |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -124,13 +80,6 @@ public interface GameBoardOptions {
             diceValueOccurrenceCounts = Arrays.stream(dice.getAllDiceValues()).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
             List<Integer> pairs = diceValueOccurrenceCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 1).map(Map.Entry::getKey).collect(Collectors.toList());
             return pairs.stream().reduce(0, Math::max) * 2;
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|One Pair           |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|One Pair           |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -152,13 +101,6 @@ public interface GameBoardOptions {
                 return 0;
             }
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Two Pair           |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Two Pair           |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class ThreeOfAKind implements GameBoardOptions {
@@ -173,13 +115,6 @@ public interface GameBoardOptions {
             if (threeOfAKind.isEmpty())
                 return 0;
             return threeOfAKind.get(0) * 3;
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Three of a Kind    |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Three of a Kind    |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -196,13 +131,6 @@ public interface GameBoardOptions {
                 return 0;
             return fourOfAKind.get(0) * 4;
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class SmallStraight implements GameBoardOptions {
@@ -217,13 +145,6 @@ public interface GameBoardOptions {
                 calculatedScore = 15;
             }
             return calculatedScore;
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Small Straight     |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Small Straight     |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -240,13 +161,6 @@ public interface GameBoardOptions {
             }
             return calculatedScore;
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Large Straight     |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Large Straight     |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class Chance implements GameBoardOptions {
@@ -256,13 +170,6 @@ public interface GameBoardOptions {
 
         public int calculateScoreFromGivenDice(Dice dice) {
             return Arrays.stream(dice.getAllDiceValues()).reduce(0, Integer::sum);
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Chance             |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Chance             |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 
@@ -284,13 +191,6 @@ public interface GameBoardOptions {
                 return 0;
             return pairs.get(0) * 2 + threeOfAKind.get(0) * 3;
         }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Full House         |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Full House         |" + calculateScoreFromGivenDice(givenDice) + "          |";
-        }
     }
 
     class Yatzy implements GameBoardOptions {
@@ -304,13 +204,6 @@ public interface GameBoardOptions {
             if (givenDice[0] == givenDice[1] && givenDice[0] == givenDice[2] && givenDice[0] == givenDice[3] && givenDice[0] == givenDice[4])
                 calculatedScore = 50;
             return calculatedScore;
-        }
-
-        public String calculateStringForScoreBoard(Dice givenDice) {
-            if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
-                return "|Yatzy              |" + calculateScoreFromGivenDice(givenDice) + "         |";
-            else
-                return "|Yatzy              |" + calculateScoreFromGivenDice(givenDice) + "          |";
         }
     }
 }
