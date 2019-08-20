@@ -37,12 +37,12 @@ public class Player {
         this.playerScore += playerScore;
     }
 
-    public int selectGameBoardOption(String selectedOption, int[] givenDice) {
-        return personalGameBoard.getSpecificOptionOnBoard(selectedOption).calculateScoreFromGivenDice(givenDice);
+    public int selectGameBoardOption(String selectedOption, Dice dice) {
+        return personalGameBoard.getSpecificOptionOnBoard(selectedOption).calculateScoreFromGivenDice(dice);
     }
 
-    public String selectHighestOptionOnGameBoardOption(int[] givenDice) {
-        return personalGameBoard.getHighestScoringOptionID(givenDice);
+    public String selectHighestOptionOnGameBoardOption(Dice dice) {
+        return personalGameBoard.getHighestScoringOptionID(dice);
     }
 }
 

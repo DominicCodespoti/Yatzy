@@ -53,7 +53,7 @@ public class GameBoard {
         return null;
     }
 
-    public String getHighestScoringOptionID(int[] givenDice) {
+    public String getHighestScoringOptionID(Dice givenDice) {
         int highestScoringOptionValue = 0;
         int highestScoringOptionIndex = 0;
 

@@ -143,9 +143,9 @@ public class Game {
             playerInput = InputHandler.validateAndReturnUserInputForGameBoardOptions(listOfPlayers[currentPlayerIterator].getPersonalGameBoard(), System.in);
         } else {
             Thread.sleep(2000);
-            playerInput = listOfPlayers[currentPlayerIterator].selectHighestOptionOnGameBoardOption(gameDice.getAllDiceValues());
+            playerInput = listOfPlayers[currentPlayerIterator].selectHighestOptionOnGameBoardOption(gameDice);
         }
-        int currentScore = listOfPlayers[currentPlayerIterator].selectGameBoardOption(playerInput, gameDice.getAllDiceValues());
+        int currentScore = listOfPlayers[currentPlayerIterator].selectGameBoardOption(playerInput, gameDice);
         listOfPlayers[currentPlayerIterator].addToPlayerScore(currentScore);
         return listOfPlayers;
     }

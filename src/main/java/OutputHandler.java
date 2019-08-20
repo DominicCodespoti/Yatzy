@@ -20,10 +20,9 @@ final public class OutputHandler {
     }
 
     public static void drawGameBoard(Dice gameDice, GameBoard givenGameBoard) {
-        int[] givenDice = gameDice.getAllDiceValues();
         System.out.println("---------------------------------");
         for (GameBoardOptions gameBoardOptions : givenGameBoard.getOptionsOnGameBoard())
-            System.out.println(gameBoardOptions.calculateStringForScoreBoard(givenDice));
+            System.out.println(gameBoardOptions.calculateStringForScoreBoard(gameDice));
         System.out.println("---------------------------------");
     }
 }

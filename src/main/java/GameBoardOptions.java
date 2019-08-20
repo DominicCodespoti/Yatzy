@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public interface GameBoardOptions {
-    int calculateScoreFromGivenDice(int[] givenDice);
+    int calculateScoreFromGivenDice(Dice dice);
 
-    String calculateStringForScoreBoard(int[] givenDice);
+    String calculateStringForScoreBoard(Dice givenDice);
 
     String calculateBoardOptionID();
 
@@ -16,11 +16,11 @@ public interface GameBoardOptions {
             return "ones";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return (int) Arrays.stream(givenDice).filter(diceValue -> diceValue == 1).count();
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 1).count();
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Ones               |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -33,11 +33,11 @@ public interface GameBoardOptions {
             return "twos";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return (int) Arrays.stream(givenDice).filter(diceValue -> diceValue == 2).count() * 2;
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 2).count() * 2;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Twos               |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -50,11 +50,11 @@ public interface GameBoardOptions {
             return "threes";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return (int) Arrays.stream(givenDice).filter(diceValue -> diceValue == 3).count() * 3;
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 3).count() * 3;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Threes             |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -67,11 +67,11 @@ public interface GameBoardOptions {
             return "fours";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return (int) Arrays.stream(givenDice).filter(diceValue -> diceValue == 4).count() * 4;
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 4).count() * 4;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Fours              |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -84,11 +84,11 @@ public interface GameBoardOptions {
             return "fives";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return (int) Arrays.stream(givenDice).filter(diceValue -> diceValue == 5).count() * 5;
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 5).count() * 5;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Fives              |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -101,11 +101,11 @@ public interface GameBoardOptions {
             return "sixes";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return (int) Arrays.stream(givenDice).filter(diceValue -> diceValue == 6).count() * 6;
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return (int) Arrays.stream(dice.getAllDiceValues()).filter(diceValue -> diceValue == 6).count() * 6;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Sixes              |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -119,14 +119,14 @@ public interface GameBoardOptions {
             return "one pair";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             Map<Integer, Integer> diceValueOccurrenceCounts;
-            diceValueOccurrenceCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
+            diceValueOccurrenceCounts = Arrays.stream(dice.getAllDiceValues()).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
             List<Integer> pairs = diceValueOccurrenceCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 1).map(Map.Entry::getKey).collect(Collectors.toList());
             return pairs.stream().reduce(0, Math::max) * 2;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|One Pair           |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -140,9 +140,9 @@ public interface GameBoardOptions {
             return "two pair";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             Map<Integer, Integer> diceValueCounts;
-            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
+            diceValueCounts = Arrays.stream(dice.getAllDiceValues()).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> newValue + 1));
             List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 1).map(Map.Entry::getKey).collect(Collectors.toList());
             if (pairs.isEmpty())
                 return 0;
@@ -153,7 +153,7 @@ public interface GameBoardOptions {
             }
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Two Pair           |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -166,16 +166,16 @@ public interface GameBoardOptions {
             return "three of a kind";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             Map<Integer, Integer> diceValueCounts;
-            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> oldValue + 1));
+            diceValueCounts = Arrays.stream(dice.getAllDiceValues()).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> oldValue + 1));
             List<Integer> threeOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 2).map(Map.Entry::getKey).collect(Collectors.toList());
             if (threeOfAKind.isEmpty())
                 return 0;
             return threeOfAKind.get(0) * 3;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Three of a Kind    |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -188,16 +188,16 @@ public interface GameBoardOptions {
             return "four of a kind";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             Map<Integer, Integer> diceValueCounts;
-            diceValueCounts = Arrays.stream(givenDice).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> oldValue + 1));
+            diceValueCounts = Arrays.stream(dice.getAllDiceValues()).boxed().collect(Collectors.toMap(diceValue -> diceValue, diceValue -> diceValue, (oldValue, newValue) -> oldValue + 1));
             List<Integer> fourOfAKind = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() == entry.getKey() + 3).map(Map.Entry::getKey).collect(Collectors.toList());
             if (fourOfAKind.isEmpty())
                 return 0;
             return fourOfAKind.get(0) * 4;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Four of a Kind     |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -210,15 +210,16 @@ public interface GameBoardOptions {
             return "small straight";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             int calculatedScore = 0;
+            int[] givenDice = dice.getAllDiceValues();
             if (givenDice[0] == 1 && givenDice[1] == 2 && givenDice[2] == 3 && givenDice[3] == 4 && givenDice[4] == 5) {
                 calculatedScore = 15;
             }
             return calculatedScore;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Small Straight     |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -231,15 +232,16 @@ public interface GameBoardOptions {
             return "large straight";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             int calculatedScore = 0;
+            int[] givenDice = dice.getAllDiceValues();
             if (givenDice[0] == 2 && givenDice[1] == 3 && givenDice[2] == 4 && givenDice[3] == 5 && givenDice[4] == 6) {
                 calculatedScore = 20;
             }
             return calculatedScore;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Large Straight     |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -252,11 +254,11 @@ public interface GameBoardOptions {
             return "chance";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
-            return Arrays.stream(givenDice).reduce(0, Integer::sum);
+        public int calculateScoreFromGivenDice(Dice dice) {
+            return Arrays.stream(dice.getAllDiceValues()).reduce(0, Integer::sum);
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Chance             |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -269,9 +271,9 @@ public interface GameBoardOptions {
             return "full house";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             HashMap<Integer, Integer> diceValueCounts = new HashMap<>();
-            for (int diceValue : givenDice)
+            for (int diceValue : dice.getAllDiceValues())
                 diceValueCounts.put(diceValue, diceValueCounts.getOrDefault(diceValue, 0) + 1);
 
             List<Integer> pairs = diceValueCounts.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getKey).collect(Collectors.toList());
@@ -283,7 +285,7 @@ public interface GameBoardOptions {
             return pairs.get(0) * 2 + threeOfAKind.get(0) * 3;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Full House         |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
@@ -296,14 +298,15 @@ public interface GameBoardOptions {
             return "yatzy";
         }
 
-        public int calculateScoreFromGivenDice(int[] givenDice) {
+        public int calculateScoreFromGivenDice(Dice dice) {
             int calculatedScore = 0;
+            int[] givenDice = dice.getAllDiceValues();
             if (givenDice[0] == givenDice[1] && givenDice[0] == givenDice[2] && givenDice[0] == givenDice[3] && givenDice[0] == givenDice[4])
                 calculatedScore = 50;
             return calculatedScore;
         }
 
-        public String calculateStringForScoreBoard(int[] givenDice) {
+        public String calculateStringForScoreBoard(Dice givenDice) {
             if (calculateScoreFromGivenDice(givenDice) >= 10 && calculateScoreFromGivenDice(givenDice) <= 99)
                 return "|Yatzy              |" + calculateScoreFromGivenDice(givenDice) + "         |";
             else
