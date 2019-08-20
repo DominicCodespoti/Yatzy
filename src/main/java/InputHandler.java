@@ -36,17 +36,23 @@ final public class InputHandler {
         return initialInputReader.nextLine();
     }
 
-    public static String validateAndReturnUserInputForDiceReroll(InputStream inputStream)
+    public static int[] validateAndReturnUserInputForDiceReroll(InputStream inputStream)
     {
         Scanner initialInputReader = new Scanner(inputStream);
         String userInput = initialInputReader.next();
         if (userInput.matches("^(\\d(,?)){1,5}")) {
-            return userInput;
+            String[] rawNumbersToKeepWhenRerolling = userInput.split(",");
+            int[] arrayOfIntsBasedOnStringArray = new int[rawNumbersToKeepWhenRerolling.length];
+            int i = 0;
+            for (String str : rawNumbersToKeepWhenRerolling) {
+                arrayOfIntsBasedOnStringArray[i] = Integer.parseInt(str.trim());
+                i++;
+            }
+            return arrayOfIntsBasedOnStringArray;
         } else {
             System.out.println("Error: Input does not match pattern of 'number' (5) or 'number comma number repeat' (5,4) pattern, try again:");
-            validateAndReturnUserInputForDiceReroll(inputStream);
+            return validateAndReturnUserInputForDiceReroll(inputStream);
         }
-        return "Error";
     }
 
     public static String validateAndReturnUserInputForChoices(InputStream inputStream, Integer boundaryInput)

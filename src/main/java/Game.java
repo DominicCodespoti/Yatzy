@@ -103,9 +103,7 @@ public class Game {
             while (Integer.parseInt(playerInput) == 1 && rerollCount < MAX_REROLL_COUNT) {
                 int amountOfDiceToRerollMatchGameDice;
                 System.out.println("Please enter the numbers you would like to keep (Example: 2,3,1): "); //TODO: print dice
-                playerInput = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
-                String[] rawNumbersToKeepWhenRerolling = playerInput.split(",");
-                int[] numbersToKeepWhenRerolling = Utilities.convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
+                int[] numbersToKeepWhenRerolling = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
 
                 while (!invalidReroll) { //TODO: Fix bug where correct reroll fails
                     amountOfDiceToRerollMatchGameDice = 0;
@@ -118,9 +116,7 @@ public class Game {
                     if (amountOfDiceToRerollMatchGameDice != numbersToKeepWhenRerolling.length) {
                         System.out.println("Error: The dice you attempted to reroll do not match the below dice, try again: ");
                         OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
-                        playerInput = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
-                        rawNumbersToKeepWhenRerolling = playerInput.split(",");
-                        numbersToKeepWhenRerolling = Utilities.convertStringArrayToIntArray(rawNumbersToKeepWhenRerolling);
+                        numbersToKeepWhenRerolling = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
                     } else {
                         gameDice = new Dice(numbersToKeepWhenRerolling);
                         OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
