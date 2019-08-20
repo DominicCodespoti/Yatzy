@@ -10,7 +10,8 @@ final public class OutputHandler {
         sortedUsers.forEach(currentPlayer -> System.out.println(currentPlayer.getPlayerName() + ": " + currentPlayer.getPlayerScore()));
     }
 
-    public static void printAllDiceRollValues(int[] diceRollValues) {
+    public static void printAllDiceRollValues(Dice gameDice) {
+        int[] diceRollValues = gameDice.getAllDiceValues();
         for (int diceIterator = 0; diceIterator < 5; diceIterator++)
             if (diceIterator < 4)
                 System.out.print(diceRollValues[diceIterator] + ", ");
@@ -18,7 +19,8 @@ final public class OutputHandler {
                 System.out.print(diceRollValues[diceIterator] + "\n");
     }
 
-    public static void drawGameBoard(int[] givenDice, GameBoard givenGameBoard) {
+    public static void drawGameBoard(Dice gameDice, GameBoard givenGameBoard) {
+        int[] givenDice = gameDice.getAllDiceValues();
         System.out.println("---------------------------------");
         for (GameBoardOptions gameBoardOptions : givenGameBoard.getOptionsOnGameBoard())
             System.out.println(gameBoardOptions.calculateStringForScoreBoard(givenDice));

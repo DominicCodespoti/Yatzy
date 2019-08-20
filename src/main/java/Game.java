@@ -88,7 +88,7 @@ public class Game {
         Dice gameDice = null;
         while (Integer.parseInt(playerInput) != 0 && rerollCount != 3) {
             gameDice = new Dice();
-            OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
+            OutputHandler.printAllDiceRollValues(gameDice);
             boolean invalidReroll = false;
 
             System.out.println(listOfPlayers[currentPlayerIterator].getPlayerName() + ", are you happy with these values (0), or would you like to reroll (1): ");
@@ -115,11 +115,11 @@ public class Game {
 
                     if (amountOfDiceToRerollMatchGameDice != numbersToKeepWhenRerolling.length) {
                         System.out.println("Error: The dice you attempted to reroll do not match the below dice, try again: ");
-                        OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
+                        OutputHandler.printAllDiceRollValues(gameDice);
                         numbersToKeepWhenRerolling = InputHandler.validateAndReturnUserInputForDiceReroll(System.in);
                     } else {
                         gameDice = new Dice(numbersToKeepWhenRerolling);
-                        OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
+                        OutputHandler.printAllDiceRollValues(gameDice);
                         invalidReroll = true;
                     }
                 }
@@ -127,7 +127,7 @@ public class Game {
                 System.out.println("You have " + (MAX_REROLL_COUNT - rerollCount) + " rerolls left. Are you happy with these values (0), or would you like to reroll (1): ");
                 playerInput = InputHandler.validateAndReturnUserInputForChoices(System.in, 1);
                 if (playerInput.equals("1")) {
-                    OutputHandler.printAllDiceRollValues(gameDice.getAllDiceValues());
+                    OutputHandler.printAllDiceRollValues(gameDice);
                     invalidReroll = false;
                 }
             }
@@ -138,7 +138,7 @@ public class Game {
     private static Player[] playerSelectGameOption(Dice gameDice, int currentPlayerIterator, Player[] listOfPlayers) throws InterruptedException {
         System.out.println("Here are the possible options on your scoreboard, please enter the name of the option you would like to pick: ");
         String playerInput;
-        OutputHandler.drawGameBoard(gameDice.getAllDiceValues(), listOfPlayers[currentPlayerIterator].getPersonalGameBoard());
+        OutputHandler.drawGameBoard(gameDice, listOfPlayers[currentPlayerIterator].getPersonalGameBoard());
         if (!listOfPlayers[currentPlayerIterator].getIsPlayerRobot()) {
             playerInput = InputHandler.validateAndReturnUserInputForGameBoardOptions(listOfPlayers[currentPlayerIterator].getPersonalGameBoard(), System.in);
         } else {
