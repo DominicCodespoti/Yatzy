@@ -1,3 +1,5 @@
+package yatzy;
+
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -17,17 +19,16 @@ final public class InputHandler {
         return "Error";
     }
 
-    public static String validateAndReturnUserInputForNumbers(InputStream inputStream)
+    public static int validateAndReturnUserInputForNumbers(InputStream inputStream)
     {
         Scanner initialInputReader = new Scanner(inputStream);
         String userInput = initialInputReader.nextLine();
-        if (userInput.matches("[0-9]*"))
-            return userInput;
+        if (userInput.matches("[0-9]+"))
+            return Integer.parseInt(userInput);
         else {
             System.out.println("Error: Input is not entirely made up of integers, try again:");
-            validateAndReturnUserInputForNumbers(inputStream);
+            return validateAndReturnUserInputForNumbers(inputStream);
         }
-        return "Error";
     }
 
     public static String validateAndReturnUserInputForNames(InputStream inputStream)
@@ -55,16 +56,15 @@ final public class InputHandler {
         }
     }
 
-    public static String validateAndReturnUserInputForChoices(InputStream inputStream, Integer boundaryInput)
+    public static int validateAndReturnUserInputForChoices(InputStream inputStream, Integer boundaryInput)
     {
         Scanner initialInputReader = new Scanner(inputStream);
         String userInput = initialInputReader.nextLine();
         if (userInput.matches("^[0-" + boundaryInput + "]")) {
-            return userInput;
+            return Integer.parseInt(userInput);
         } else {
             System.out.println("Error: Please input a value between 0 and " + boundaryInput + " :");
-            validateAndReturnUserInputForDiceReroll(inputStream);
+            return validateAndReturnUserInputForChoices(inputStream, boundaryInput);
         }
-        return "Error";
     }
 }

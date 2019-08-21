@@ -1,34 +1,40 @@
+package yatzy;
+
+import yatzy.options.*;
+
 public class GameBoard {
-    private GameBoardOptions[] optionsOnGameBoard;
+    private GameBoardOption[] optionsOnGameBoard;
 
     public GameBoard() {
-        optionsOnGameBoard = new GameBoardOptions[15];
-        optionsOnGameBoard[0] = new GameBoardOptions.Ones();
-        optionsOnGameBoard[1] = new GameBoardOptions.Twos();
-        optionsOnGameBoard[2] = new GameBoardOptions.Threes();
-        optionsOnGameBoard[3] = new GameBoardOptions.Fours();
-        optionsOnGameBoard[4] = new GameBoardOptions.Fives();
-        optionsOnGameBoard[5] = new GameBoardOptions.Sixes();
-        optionsOnGameBoard[6] = new GameBoardOptions.OnePair();
-        optionsOnGameBoard[7] = new GameBoardOptions.TwoPair();
-        optionsOnGameBoard[8] = new GameBoardOptions.ThreeOfAKind();
-        optionsOnGameBoard[9] = new GameBoardOptions.FourOfAKind();
-        optionsOnGameBoard[10] = new GameBoardOptions.SmallStraight();
-        optionsOnGameBoard[11] = new GameBoardOptions.LargeStraight();
-        optionsOnGameBoard[12] = new GameBoardOptions.Chance();
-        optionsOnGameBoard[13] = new GameBoardOptions.FullHouse();
-        optionsOnGameBoard[14] = new GameBoardOptions.Yatzy();
+        optionsOnGameBoard = new GameBoardOption[]{
+                new SumOfDiceValue("Ones", 1),
+                new SumOfDiceValue("Twos", 2),
+                new SumOfDiceValue("Threes", 3),
+                new SumOfDiceValue("Fives", 5),
+                new SumOfDiceValue("Fours", 4),
+                new SumOfDiceValue("Sixes", 6),
+                new NumberOfAKind("One Pair", 2),
+                new NumberOfAKind("Three Of A Kind", 3),
+                new NumberOfAKind("Four Of A Kind", 4),
+                new NumberOfAKind("Two Pair", 2, 2),
+                new NumberOfAKind("Full House", 3, 2),
+
+                new SmallStraight("Small Straight"),
+                new LargeStraight("Large Straight"),
+                new Chance("Chance"),
+                new Yatzy("Yatzy")
+        };
     }
 
     public GameBoard(GameBoard anotherGameBoard) {
         this.optionsOnGameBoard = anotherGameBoard.optionsOnGameBoard;
     }
 
-    private static GameBoardOptions[] removeOptionFromGameBoardAtIndex(GameBoardOptions[] originalArray, int index) {
+    private static GameBoardOption[] removeOptionFromGameBoardAtIndex(GameBoardOption[] originalArray, int index) {
         if (originalArray == null || index < 0 || index >= originalArray.length) {
             return originalArray;
         }
-        GameBoardOptions[] copyOfOriginalArrayWithOptionRemoved = new GameBoardOptions[originalArray.length - 1];
+        GameBoardOption[] copyOfOriginalArrayWithOptionRemoved = new GameBoardOption[originalArray.length - 1];
         for (int arrayIterator = 0, arrayIteratorPlusOne = 0; arrayIterator < originalArray.length; arrayIterator++) {
             if (arrayIterator == index) {
                 continue;
@@ -42,10 +48,10 @@ public class GameBoard {
         return optionsOnGameBoard.length == 0;
     }
 
-    public GameBoardOptions getSpecificOptionOnBoard(String userInput) {
+    public GameBoardOption getSpecificOptionOnBoard(String userInput) {
         for (int boardOptionIterator = 0; boardOptionIterator < optionsOnGameBoard.length; boardOptionIterator++) {
             if (optionsOnGameBoard[boardOptionIterator].optionName().toLowerCase().equals(userInput.toLowerCase())) {
-                GameBoardOptions copyOfSelectedOption = optionsOnGameBoard[boardOptionIterator];
+                GameBoardOption copyOfSelectedOption = optionsOnGameBoard[boardOptionIterator];
                 optionsOnGameBoard = removeOptionFromGameBoardAtIndex(optionsOnGameBoard, boardOptionIterator);
                 return copyOfSelectedOption;
             }
@@ -67,7 +73,7 @@ public class GameBoard {
         return optionsOnGameBoard[highestScoringOptionIndex].optionName();
     }
 
-    GameBoardOptions[] getOptionsOnGameBoard() {
+    GameBoardOption[] getOptionsOnGameBoard() {
         return optionsOnGameBoard;
     }
 }

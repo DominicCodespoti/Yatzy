@@ -1,12 +1,14 @@
+package yatzy;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 final public class OutputHandler {
-    public static void drawGameResults(Player[] listOfPlayers) {
+    public static void drawGameResults(List<Player> listOfPlayers) {
         System.out.println("Congratulations, you have reached the end of the game! Here are your scores: ");
-        List<Player> sortedUsers = Arrays.stream(listOfPlayers).sorted(Comparator.comparing(Player::getPlayerScore).reversed()).collect(Collectors.toList());
+        List<Player> sortedUsers = listOfPlayers.stream().sorted(Comparator.comparing(Player::getPlayerScore).reversed()).collect(Collectors.toList());
         sortedUsers.forEach(currentPlayer -> System.out.println(currentPlayer.getPlayerName() + ": " + currentPlayer.getPlayerScore()));
     }
 
@@ -21,9 +23,9 @@ final public class OutputHandler {
 
     public static void drawGameBoard(Dice gameDice, GameBoard givenGameBoard) {
         System.out.println(String.format("%030d", 0).replace("0", "-"));
-        for (GameBoardOptions gameBoardOptions : givenGameBoard.getOptionsOnGameBoard()) {
-            int score = gameBoardOptions.calculateScoreFromGivenDice(gameDice);
-            System.out.println(String.format("| %-20s | %3d |", gameBoardOptions.optionName(), score));
+        for (GameBoardOption gameBoardOption : givenGameBoard.getOptionsOnGameBoard()) {
+            int score = gameBoardOption.calculateScoreFromGivenDice(gameDice);
+            System.out.println(String.format("| %-20s | %3d |", gameBoardOption.optionName(), score));
         }
         System.out.println(String.format("%030d", 0).replace("0", "-"));
     }
