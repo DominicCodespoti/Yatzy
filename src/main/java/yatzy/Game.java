@@ -7,49 +7,52 @@ import java.util.Queue;
 
 public class Game {
 
-    public void play() {
-        Queue<Player> activePlayers = new ArrayDeque<>(initializePlayersBasedOnInput());
-        List<Player> finishedPlayers = new ArrayList<>();
+  public Game() {
+  }
 
-        while (!activePlayers.isEmpty()) {
-            Player player = activePlayers.poll();
-            System.out.println("It is now " + player.getPlayerName() + "'s turn!");
+  public void play() {
+    Queue<Player> activePlayers = new ArrayDeque<>(initializePlayersBasedOnInput());
+    List<Player> finishedPlayers = new ArrayList<>();
 
-            player.takeTurn();
-            if (player.isFinished()) {
-                finishedPlayers.add(player);
-            } else {
-                activePlayers.add(player);
-            }
-        }
+    while (!activePlayers.isEmpty()) {
+      Player player = activePlayers.poll();
+      System.out.println("It is now " + player.getPlayerName() + "'s turn!");
 
-        OutputHandler.drawGameResults(finishedPlayers);
+      player.takeTurn();
+      if (player.isFinished()) {
+        finishedPlayers.add(player);
+      } else {
+        activePlayers.add(player);
+      }
     }
 
-    private List<Player> initializePlayersBasedOnInput() {
-        List<Player> players = new ArrayList<>();
+    OutputHandler.drawGameResults(finishedPlayers);
+  }
 
-        System.out.println("Welcome to Yatzy!");
+  private List<Player> initializePlayersBasedOnInput() {
+    List<Player> players = new ArrayList<>();
 
-        while (true) {
-            System.out.println("Add a bot (0), add a player (1) or done (2) ?");
-            int choice = InputHandler.validateAndReturnUserInputForChoices(System.in, 2);
+    System.out.println("Welcome to Yatzy!");
 
-            if (choice == 2) {
-                break;
-            }
+    while (true) {
+      System.out.println("Add a bot (0), add a player (1) or done (2) ?");
+      int choice = InputHandler.validateAndReturnUserInputForChoices(System.in, 2);
 
-            boolean isBot = (choice == 0);
+      if (choice == 2) {
+        break;
+      }
 
-            String label = isBot ? "bot" : "player";
-            System.out.println("Name of " + label + " ?");
-            String name = InputHandler.validateAndReturnUserInputForNames(System.in);
+      boolean isBot = choice == 0;
 
-            Player player = new Player(name);
-            player.setIsPlayerRobot(isBot);
-            players.add(player);
-        }
+      String label = isBot ? "bot" : "player";
+      System.out.println("Name of " + label + " ?");
+      String name = InputHandler.validateAndReturnUserInputForNames(System.in);
 
-        return players;
+      Player player = new Player(name);
+      player.setIsPlayerRobot(isBot);
+      players.add(player);
     }
+
+    return players;
+  }
 }

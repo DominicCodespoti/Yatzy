@@ -1,22 +1,22 @@
 package yatzy.options;
 
+import java.util.Arrays;
 import yatzy.Dice;
 import yatzy.GameBoardOption;
 
-import java.util.Arrays;
-
 public class Chance implements GameBoardOption {
-    private String name;
 
-    public Chance(String name) {
-        this.name = name;
-    }
+  private String name;
 
-    public String optionName() {
-        return name;
-    }
+  public Chance(String name) {
+    this.name = name;
+  }
 
-    public int calculateScoreFromGivenDice(Dice dice) {
-        return Arrays.stream(dice.getAllDiceValues()).sum();
-    }
+  public String optionName() {
+    return name;
+  }
+
+  public int calculateScoreFromGivenDice(Dice dice) {
+    return Arrays.stream(dice.getAllDiceValues()).sum();
+  }
 }
