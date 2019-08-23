@@ -1,6 +1,8 @@
 package yatzy;
 
 public interface GameBoardOption {
-    int calculateScoreFromGivenDice(Dice dice);
-    String optionName();
+
+  int calculateScoreFromGivenDice(Dice dice);
+
+  String optionName();
 }
